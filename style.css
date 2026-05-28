@@ -1,65 +1,39 @@
 body{
-    margin:0;
     text-align:center;
-    font-family:sans-serif;
+    background:linear-gradient(45deg, red, orange, pink, purple);
     color:white;
-    background: linear-gradient(270deg, red, orange, yellow, green, blue, purple);
-    background-size: 1200% 1200%;
-    animation: bgMove 10s infinite;
 }
 
-@keyframes bgMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+/* 👧 girl */
+.girl{
+    width:120px;
+    margin-top:10px;
 }
 
-.title{
-    margin-top:30px;
-    font-size:30px;
-    text-shadow:0 0 20px white;
+/* 🎂 cake */
+#cake{
+    width:200px;
+    margin-top:20px;
+    transition:0.5s;
 }
 
-.btn{
-    padding:15px 30px;
-    font-size:18px;
+/* 🔪 button */
+.cutBtn{
+    padding:10px 20px;
+    margin:15px;
+    background:gold;
     border:none;
     border-radius:10px;
-    background:gold;
-    cursor:pointer;
 }
 
-#surpriseBox{
-    display:none;
-    margin-top:20px;
-}
-
-#videoSlideshow{
-    position:relative;
-    width:300px;
-    height:300px;
-    margin:auto;
-    overflow:hidden;
-    border-radius:20px;
-    box-shadow:0 0 40px white,0 0 80px pink;
-}
-
-.vslide{
+/* 🎈 balloons */
+.balloon{
     position:absolute;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    opacity:0;
-    transform:scale(1.2);
-    transition:2s;
+    width:60px;
+    animation:float 6s linear infinite;
 }
 
-.vslide.active{
-    opacity:1;
-    transform:scale(1);
-}
-
-#surpriseText{
-    font-size:20px;
-    margin-top:20px;
+@keyframes float{
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-100vh);}
 }
