@@ -6,9 +6,9 @@
 <style>
 body{
     margin:0;
+    overflow:hidden;
     background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
     height:100vh;
-    overflow:hidden;
 }
 
 /* GIRL */
@@ -36,7 +36,6 @@ body{
 }
 .left{ clip-path: inset(0 50% 0 0); }
 .right{ clip-path: inset(0 0 0 50%); }
-
 .cut-left{ transform:translateX(-40px); }
 .cut-right{ transform:translateX(40px); }
 
@@ -50,71 +49,74 @@ body{
     display:none;
     transition:1s;
 }
-.hold{
-    left:62%;
-    transform:translateY(-50%) rotate(-40deg);
-}
-.cut{
-    transform:translateY(-20%) rotate(-40deg);
-}
+.hold{ left:62%; transform:translateY(-50%) rotate(-40deg); }
+.cut{ transform:translateY(-20%) rotate(-40deg); }
 
-/* FIREWORKS */
+/* 🎆 FIREWORKS */
 #fireworks{
     position:fixed;
-    top:0;
-    left:0;
     width:100%;
     height:100%;
+    top:0;
+    left:0;
     pointer-events:none;
 }
 .fire{
     position:absolute;
-    width:180px;
-    animation:boom 1.4s linear;
+    width:200px;
+    animation:boom 1.5s linear;
 }
 @keyframes boom{
-    0%{transform:scale(0.4);opacity:1;}
-    100%{transform:scale(2.2);opacity:0;}
+    0%{transform:scale(0.5);opacity:1;}
+    100%{transform:scale(2.5);opacity:0;}
 }
 
-/* ✨ PREMIUM NAME STYLE */
+/* 🎈 BALLOONS */
+#balloons{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+}
+.balloon{
+    width:60px;
+    position:absolute;
+    bottom:-100px;
+    animation:floatUp 8s linear infinite;
+    cursor:pointer;
+}
+@keyframes floatUp{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-120vh);}
+}
+
+/* 💥 BLAST */
+.blast{
+    position:absolute;
+    width:80px;
+    animation:blastAnim 0.6s linear;
+}
+@keyframes blastAnim{
+    0%{transform:scale(0.5);opacity:1;}
+    100%{transform:scale(1.8);opacity:0;}
+}
+
+/* ✨ NAME STYLE */
 #name{
     position:fixed;
     top:6%;
     left:50%;
     transform:translateX(-50%);
-    font-size:65px;
+    font-size:60px;
+    font-family: "Brush Script MT", cursive;
     font-weight:bold;
-    letter-spacing:5px;
     display:none;
 
-    /* GOLD GRADIENT */
-    background:linear-gradient(45deg,#FFD700,#fff5cc,#FFD700);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-
-    /* SOFT GLOW */
-    text-shadow:0 0 10px rgba(255,215,0,0.6),
-                0 0 20px rgba(255,215,0,0.4);
-
-    overflow:hidden;
-}
-
-/* ✨ SHINE EFFECT */
-#name::after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.9), transparent);
-    animation:shine 3s infinite;
-}
-
-@keyframes shine{
-    0%{ left:-100%; }
-    100%{ left:100%; }
+    color:#ff4dff;
+    text-shadow:0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 30px currentColor;
 }
 
 /* BUTTONS */
@@ -135,7 +137,6 @@ body{
     .girl{width:120px;}
     .half{width:120px;}
     #name{font-size:40px;}
-    .img-btn{width:90px;}
 }
 </style>
 </head>
@@ -143,6 +144,7 @@ body{
 <body>
 
 <div id="fireworks"></div>
+<div id="balloons"></div>
 
 <h1 id="name">Sahitya</h1>
 
@@ -157,15 +159,16 @@ body{
 <div class="btns">
     <img src="https://i.ibb.co/fz19TN1B/entry.png" onclick="showGirl()" class="img-btn">
     <img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" onclick="cutCake()" class="img-btn">
-    <img src="https://i.ibb.co/TDdCnYTj/Surprise.png" onclick="goSurprise()" class="img-btn">
 </div>
 
 <script>
 
+/* GIRL MOVE */
 function showGirl(){
     document.getElementById("girl").classList.add("to-cake");
 }
 
+/* CUT CAKE */
 function cutCake(){
 
     let knife = document.getElementById("knife");
@@ -183,19 +186,17 @@ function cutCake(){
 
     setTimeout(()=>{
         document.getElementById("name").style.display="block";
-    },3600);
-
-    setTimeout(()=>{
+        startColorChange();
         startFireworks();
-    },4200);
+        startBalloons();
+    },3600);
 }
 
+/* 🎆 FIREWORKS */
 function startFireworks(){
-
     let container = document.getElementById("fireworks");
 
     setInterval(()=>{
-
         let fire = document.createElement("img");
         fire.src="https://i.ibb.co/8QLGcnS/Pngtree-fireworks-for-new-years-celebration-20180243.png";
         fire.className="fire";
@@ -204,14 +205,59 @@ function startFireworks(){
         fire.style.top = Math.random()*70 + "%";
 
         container.appendChild(fire);
-
-        setTimeout(()=>{ fire.remove(); },1400);
-
+        setTimeout(()=>{ fire.remove(); },1500);
     },200);
 }
 
-function goSurprise(){
-    window.location.href="surprise.html";
+/* 🎈 BALLOONS */
+function startBalloons(){
+    let container = document.getElementById("balloons");
+
+    setInterval(()=>{
+        let b = document.createElement("img");
+        b.src="https://i.ibb.co/7QpKsCX/balloon.png";
+        b.className="balloon";
+
+        b.style.left = Math.random()*90 + "%";
+
+        /* CLICK BLAST */
+        b.onclick = function(e){
+            createBlast(e.pageX, e.pageY);
+            b.remove();
+        };
+
+        container.appendChild(b);
+
+        setTimeout(()=>{ b.remove(); },8000);
+    },800);
+}
+
+/* 💥 BLAST EFFECT */
+function createBlast(x,y){
+    let blast = document.createElement("img");
+    blast.src="https://i.ibb.co/3W3hZgS/explosion.png";
+    blast.className="blast";
+
+    blast.style.left = x+"px";
+    blast.style.top = y+"px";
+
+    document.body.appendChild(blast);
+
+    setTimeout(()=>{ blast.remove(); },600);
+}
+
+/* 🌈 COLOR CHANGE TEXT */
+function startColorChange(){
+    let name = document.getElementById("name");
+
+    let colors = ["#ff4dff","#00ffff","#ffff00","#ff0000","#00ff00","#ff8800"];
+
+    let i = 0;
+
+    setInterval(()=>{
+        name.style.color = colors[i];
+        i = (i+1)%colors.length;
+    },1000);
 }
 
 </script>
