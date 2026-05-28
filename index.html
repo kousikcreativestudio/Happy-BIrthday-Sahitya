@@ -45,21 +45,34 @@ body{
 .knife{
     width:90px;
     position:fixed;
-    top:50%;
-    left:70%;
-    transform:translateY(-50%);
+
+    top:55%;
+    left:58%;   /* 👈 middle between girl & cake */
+
+    transform:translate(-50%, -50%) rotate(-45deg);
+
     display:none;
-    transition:1s;
-    z-index:3;
+    transition:0.4s;
+    z-index:6;   /* 👈 above cake now */
+}
 }
 .cut-action{
-    animation:realCut 0.6s ease forwards;
+    animation:realKnifeCut 0.5s ease-in-out forwards;
 }
 
-@keyframes realCut{
-    0%{ transform:translateY(-50%) rotate(-40deg); }
-    50%{ transform:translateY(-20%) rotate(-40deg); }
-    100%{ transform:translateY(-50%) rotate(-40deg); }
+@keyframes realKnifeCut{
+    0%{
+        transform:translate(-50%, -50%) rotate(-45deg);
+    }
+    40%{
+        transform:translate(-50%, -20%) rotate(-45deg); /* moves down */
+    }
+    60%{
+        transform:translate(-50%, -20%) rotate(-45deg); /* stays */
+    }
+    100%{
+        transform:translate(-50%, -50%) rotate(-45deg); /* back */
+    }
 }
 
 /* FIREWORKS */
