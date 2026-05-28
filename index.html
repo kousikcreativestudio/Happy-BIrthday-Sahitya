@@ -19,6 +19,7 @@ body{
     left:-200px;
     transform:translateY(-50%);
     transition:2s;
+    z-index:5;
 }
 .to-cake{ left:57%; }
 
@@ -28,6 +29,7 @@ body{
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
+    z-index:5;
 }
 .half{
     width:160px;
@@ -48,11 +50,12 @@ body{
     transform:translateY(-50%);
     display:none;
     transition:1s;
+    z-index:6;
 }
 .hold{ left:62%; transform:translateY(-50%) rotate(-40deg); }
 .cut{ transform:translateY(-20%) rotate(-40deg); }
 
-/* 🎆 FIREWORKS */
+/* FIREWORKS */
 #fireworks{
     position:fixed;
     width:100%;
@@ -60,6 +63,7 @@ body{
     top:0;
     left:0;
     pointer-events:none;
+    z-index:1;
 }
 .fire{
     position:absolute;
@@ -71,47 +75,50 @@ body{
     100%{transform:scale(2.5);opacity:0;}
 }
 
-/* 🎈 BALLOONS */
+/* BALLOONS */
 #balloons{
     position:fixed;
     width:100%;
     height:100%;
     top:0;
     left:0;
+    z-index:10;
 }
 .balloon{
-    width:60px;
+    width:80px;
     position:absolute;
-    bottom:-100px;
-    animation:floatUp 8s linear infinite;
+    bottom:-120px;
+    animation:floatUp 7s linear infinite;
     cursor:pointer;
 }
 @keyframes floatUp{
     0%{transform:translateY(0);}
-    100%{transform:translateY(-120vh);}
+    100%{transform:translateY(-130vh);}
 }
 
-/* 💥 BLAST */
+/* BLAST */
 .blast{
     position:absolute;
-    width:80px;
+    width:90px;
+    pointer-events:none;
     animation:blastAnim 0.6s linear;
+    transform:translate(-50%,-50%);
 }
 @keyframes blastAnim{
-    0%{transform:scale(0.5);opacity:1;}
-    100%{transform:scale(1.8);opacity:0;}
+    0%{transform:translate(-50%,-50%) scale(0.5);opacity:1;}
+    100%{transform:translate(-50%,-50%) scale(2);opacity:0;}
 }
 
-/* ✨ NAME STYLE */
+/* NAME */
 #name{
     position:fixed;
     top:6%;
     left:50%;
     transform:translateX(-50%);
     font-size:60px;
-    font-family: "Brush Script MT", cursive;
-    font-weight:bold;
+    font-family:"Brush Script MT",cursive;
     display:none;
+    z-index:20;
 
     color:#ff4dff;
     text-shadow:0 0 10px currentColor,
@@ -125,6 +132,7 @@ body{
     bottom:10px;
     width:100%;
     text-align:center;
+    z-index:20;
 }
 .img-btn{
     width:110px;
@@ -159,16 +167,17 @@ body{
 <div class="btns">
     <img src="https://i.ibb.co/fz19TN1B/entry.png" onclick="showGirl()" class="img-btn">
     <img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" onclick="cutCake()" class="img-btn">
+    <img src="https://i.ibb.co/TDdCnYTj/Surprise.png" onclick="goSurprise()" class="img-btn">
 </div>
 
 <script>
 
-/* GIRL MOVE */
+/* GIRL */
 function showGirl(){
     document.getElementById("girl").classList.add("to-cake");
 }
 
-/* CUT CAKE */
+/* CUT */
 function cutCake(){
 
     let knife = document.getElementById("knife");
@@ -192,7 +201,7 @@ function cutCake(){
     },3600);
 }
 
-/* 🎆 FIREWORKS */
+/* FIREWORKS */
 function startFireworks(){
     let container = document.getElementById("fireworks");
 
@@ -209,30 +218,31 @@ function startFireworks(){
     },200);
 }
 
-/* 🎈 BALLOONS */
+/* BALLOONS (YOUR IMAGE FIXED) */
 function startBalloons(){
     let container = document.getElementById("balloons");
 
     setInterval(()=>{
         let b = document.createElement("img");
-        b.src="https://i.ibb.co/7QpKsCX/balloon.png";
-        b.className="balloon";
 
+        /* YOUR IMAGE */
+        b.src="https://i.ibb.co/8VzV5Rv/balloon.png";
+
+        b.className="balloon";
         b.style.left = Math.random()*90 + "%";
 
-        /* CLICK BLAST */
         b.onclick = function(e){
-            createBlast(e.pageX, e.pageY);
+            createBlast(e.clientX, e.clientY);
             b.remove();
         };
 
         container.appendChild(b);
 
-        setTimeout(()=>{ b.remove(); },8000);
-    },800);
+        setTimeout(()=>{ b.remove(); },7000);
+    },700);
 }
 
-/* 💥 BLAST EFFECT */
+/* BLAST */
 function createBlast(x,y){
     let blast = document.createElement("img");
     blast.src="https://i.ibb.co/3W3hZgS/explosion.png";
@@ -246,18 +256,23 @@ function createBlast(x,y){
     setTimeout(()=>{ blast.remove(); },600);
 }
 
-/* 🌈 COLOR CHANGE TEXT */
+/* COLOR TEXT */
 function startColorChange(){
     let name = document.getElementById("name");
 
-    let colors = ["#ff4dff","#00ffff","#ffff00","#ff0000","#00ff00","#ff8800"];
+    let colors=["#ff4dff","#00ffff","#ffff00","#ff0000","#00ff00","#ff8800"];
 
-    let i = 0;
+    let i=0;
 
     setInterval(()=>{
         name.style.color = colors[i];
-        i = (i+1)%colors.length;
+        i=(i+1)%colors.length;
     },1000);
+}
+
+/* SURPRISE */
+function goSurprise(){
+    window.location.href="surprise.html";
 }
 
 </script>
