@@ -69,7 +69,7 @@ body{
 }
 .fire{
     position:absolute;
-    width:180px; /* EXTRA BIG */
+    width:180px;
     animation:boom 1.4s linear;
 }
 @keyframes boom{
@@ -77,7 +77,7 @@ body{
     100%{transform:scale(2.2);opacity:0;}
 }
 
-/* 🌈 NAME */
+/* ✨ PREMIUM NAME STYLE */
 #name{
     position:fixed;
     top:6%;
@@ -85,22 +85,22 @@ body{
     transform:translateX(-50%);
     font-size:65px;
     font-weight:bold;
-    letter-spacing:6px;
+    letter-spacing:5px;
     display:none;
-    animation:colorGlow 2s infinite linear;
+
+    /* GOLD GRADIENT */
+    background:linear-gradient(45deg,#FFD700,#fff5cc,#FFD700);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    /* SOFT GLOW */
+    text-shadow:0 0 10px rgba(255,215,0,0.6),
+                0 0 20px rgba(255,215,0,0.4);
+
+    overflow:hidden;
 }
 
-/* RAINBOW COLORS */
-@keyframes colorGlow{
-    0%{color:#ff0000; text-shadow:0 0 10px #ff0000;}
-    20%{color:#ff9900; text-shadow:0 0 15px #ff9900;}
-    40%{color:#00ff00; text-shadow:0 0 15px #00ff00;}
-    60%{color:#00ccff; text-shadow:0 0 15px #00ccff;}
-    80%{color:#cc00ff; text-shadow:0 0 15px #cc00ff;}
-    100%{color:#ff0000; text-shadow:0 0 10px #ff0000;}
-}
-
-/* ✨ MOVING LIGHT EFFECT */
+/* ✨ SHINE EFFECT */
 #name::after{
     content:"";
     position:absolute;
@@ -109,7 +109,7 @@ body{
     width:100%;
     height:100%;
     background:linear-gradient(120deg, transparent, rgba(255,255,255,0.9), transparent);
-    animation:shine 2s infinite;
+    animation:shine 3s infinite;
 }
 
 @keyframes shine{
@@ -190,7 +190,6 @@ function cutCake(){
     },4200);
 }
 
-/* MORE DENSE FIREWORKS */
 function startFireworks(){
 
     let container = document.getElementById("fireworks");
@@ -208,7 +207,7 @@ function startFireworks(){
 
         setTimeout(()=>{ fire.remove(); },1400);
 
-    },200); // faster = more fireworks
+    },200);
 }
 
 function goSurprise(){
