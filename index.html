@@ -122,41 +122,19 @@ body{
 
 /* NAME */
 #name{
-    font-size: 80px;
-    font-weight: bold;
-    text-align: center;
-    color: #ff4081;
+    position:fixed;
+    top:6%;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:80px;
+    font-family:"Brush Script MT",cursive;
+    display:none;
+    z-index:20;
 
-    opacity: 0;
-    transform: scale(0.5);
-
-    animation: namePop 1s ease forwards,
-               glow 1.5s infinite alternate;
-}
-
-/* POP ANIMATION */
-@keyframes namePop{
-    0%{
-        opacity:0;
-        transform: scale(0.5);
-    }
-    60%{
-        opacity:1;
-        transform: scale(1.2);
-    }
-    100%{
-        transform: scale(1);
-    }
-}
-
-/* GLOW EFFECT */
-@keyframes glow{
-    0%{
-        text-shadow: 0 0 10px #fff, 0 0 20px pink;
-    }
-    100%{
-        text-shadow: 0 0 20px #fff, 0 0 40px #ff4081;
-    }
+    color:#ff4dff;
+    text-shadow:0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 30px currentColor;
 }
 
 /* BUTTONS */
