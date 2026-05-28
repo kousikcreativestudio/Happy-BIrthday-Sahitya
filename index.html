@@ -21,6 +21,15 @@ body{
     transition:2s;
     z-index:5;
 }
+    /* REAL WALK ANIMATION */
+.walking{
+    animation:walkMove 0.4s infinite alternate;
+}
+
+@keyframes walkMove{
+    0%{ transform:translateY(-50%) translateX(0); }
+    100%{ transform:translateY(-47%) translateX(2px); }
+}
 .to-cake{ left:57%; }
 
 /* CAKE */
@@ -174,7 +183,14 @@ body{
 
 /* GIRL */
 function showGirl(){
-    document.getElementById("girl").classList.add("to-cake");
+    let g = document.getElementById("girl");
+
+    g.classList.add("walking");   // walking effect
+    g.classList.add("to-cake");   // move forward
+
+    setTimeout(()=>{
+        g.classList.remove("walking"); // stop after reach
+    },2000);
 }
 
 /* CUT */
