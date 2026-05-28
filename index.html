@@ -2,35 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Birthday Surprise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
   font-family: Arial;
-  background: linear-gradient(#ff0080, #ff4da6);
+  background: linear-gradient(#ff9a9e, #fad0c4);
 }
 
-/* TOP NAME */
+/* NAME */
 #name {
   position: absolute;
   top: 20px;
   width: 100%;
   text-align: center;
   font-size: 50px;
-  font-weight: bold;
   font-family: "Brush Script MT", cursive;
   animation: colorChange 1s infinite;
   text-shadow: 0 0 10px white, 0 0 20px yellow;
 }
 
 @keyframes colorChange {
-  0% {color: #ff0000;}
-  25% {color: #00ff00;}
-  50% {color: #00ccff;}
-  75% {color: #ffff00;}
-  100% {color: #ff00ff;}
+  0% {color: red;}
+  25% {color: green;}
+  50% {color: blue;}
+  75% {color: yellow;}
+  100% {color: magenta;}
 }
 
 /* CAKE */
@@ -39,7 +39,7 @@ body {
   bottom: 120px;
   left: 50%;
   transform: translateX(-50%);
-  width: 250px;
+  width: 220px;
 }
 
 /* BUTTONS */
@@ -54,22 +54,23 @@ body {
   padding: 10px 20px;
   margin: 5px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 /* BALLOONS */
 .balloon {
   position: absolute;
-  width: 80px;
+  width: 70px;
+  animation: floatUp 6s linear forwards;
   cursor: pointer;
-  animation: floatUp 6s linear infinite;
 }
 
 @keyframes floatUp {
-  0% {transform: translateY(100vh);}
-  100% {transform: translateY(-150px);}
+  from {transform: translateY(100vh);}
+  to {transform: translateY(-150px);}
 }
 
-/* BLAST EFFECT */
+/* BLAST */
 .blast {
   position: absolute;
   width: 100px;
@@ -95,7 +96,8 @@ canvas {
 
 <div id="name">Sahitya</div>
 
-<img id="cake" src="https://i.ibb.co/7y3Q3hF/cake.png">
+<!-- FIXED CAKE IMAGE -->
+<img id="cake" src="https://cdn.pixabay.com/photo/2016/03/31/19/14/cake-1293096_1280.png">
 
 <canvas id="fireworks"></canvas>
 
@@ -106,67 +108,67 @@ canvas {
 </div>
 
 <script>
-/* ---------------- FIREWORK ---------------- */
+
+/* FIREWORK SYSTEM */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particles = [];
 
 function createFirework(x, y) {
-  for (let i = 0; i < 60; i++) { // bigger fireworks
+  for (let i = 0; i < 80; i++) {
     particles.push({
-      x, y,
-      dx: (Math.random() - 0.5) * 8,
-      dy: (Math.random() - 0.5) * 8,
+      x: x,
+      y: y,
+      dx: (Math.random() - 0.5) * 10,
+      dy: (Math.random() - 0.5) * 10,
       life: 100
     });
   }
 }
 
-function animateFirework() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   particles.forEach((p, i) => {
     p.x += p.dx;
     p.y += p.dy;
     p.life--;
 
     ctx.beginPath();
-    ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
     ctx.fillStyle = "white";
     ctx.fill();
 
-    if (p.life <= 0) particles.splice(i,1);
+    if (p.life <= 0) particles.splice(i, 1);
   });
-  requestAnimationFrame(animateFirework);
-}
-animateFirework();
 
-/* ---------------- BUTTON ACTIONS ---------------- */
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* BUTTONS */
 function entry() {
   alert("Entry Started 🎉");
 }
 
 function cutCake() {
-  createFirework(window.innerWidth/2, 200);
-
+  createFirework(window.innerWidth / 2, 200);
   setTimeout(() => {
-    createFirework(window.innerWidth/2, 150);
+    createFirework(window.innerWidth / 2, 150);
   }, 500);
 }
 
+/* BALLOONS */
 function surprise() {
-  spawnBalloons();
-}
-
-/* ---------------- BALLOONS ---------------- */
-function spawnBalloons() {
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     let b = document.createElement("img");
-    b.src = "https://i.ibb.co/8VzV5Rv/balloon.png";
+    b.src = "https://cdn.pixabay.com/photo/2014/04/03/11/55/balloon-312297_1280.png";
     b.className = "balloon";
-    b.style.left = Math.random()*window.innerWidth + "px";
+    b.style.left = Math.random() * window.innerWidth + "px";
 
     b.onclick = function(e) {
       blast(e.clientX, e.clientY);
@@ -174,23 +176,25 @@ function spawnBalloons() {
     };
 
     document.body.appendChild(b);
+
+    setTimeout(() => b.remove(), 6000);
   }
 }
 
-/* ---------------- BLAST ---------------- */
+/* BLAST */
 function blast(x, y) {
-  let blast = document.createElement("img");
-  blast.src = "https://i.ibb.co/MDNbcwdM/blast-effect.png";
-  blast.className = "blast";
-  blast.style.left = (x-50) + "px";
-  blast.style.top = (y-50) + "px";
+  let img = document.createElement("img");
+  img.src = "https://cdn.pixabay.com/photo/2013/07/12/13/57/explosion-147909_1280.png";
+  img.className = "blast";
 
-  document.body.appendChild(blast);
+  img.style.left = (x - 50) + "px";
+  img.style.top = (y - 50) + "px";
 
-  setTimeout(() => {
-    blast.remove();
-  }, 500);
+  document.body.appendChild(img);
+
+  setTimeout(() => img.remove(), 500);
 }
+
 </script>
 
 </body>
