@@ -3,109 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>🎉 Happy Birthday Sahitya 🎂</title>
 
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  margin: 0;
-  font-family: Arial;
-  text-align: center;
-  color: white;
-  background: url('background.jpg') no-repeat center center/cover;
-  overflow: hidden;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+
+    /* 🎨 FULL BACKGROUND */
+    background: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d') no-repeat center center/cover;
+    min-height: 100vh;
+}
+
+/* Overlay */
+.overlay {
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+/* Container */
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
 }
 
 /* Title */
 h1 {
-  margin-top: 30px;
-  font-size: 36px;
-  text-shadow: 2px 2px 10px black;
+    font-size: 28px;
+    margin-top: 20px;
 }
 
 /* Buttons */
+.buttons {
+    margin: 15px 0;
+}
+
 button {
-  padding: 12px 25px;
-  margin: 10px;
-  border: none;
-  border-radius: 10px;
-  background: orange;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
+    padding: 10px 18px;
+    font-size: 14px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    background: orange;
+    color: white;
+    cursor: pointer;
 }
 
 /* Cake */
-#cake {
-  width: 180px;
-  margin-top: 20px;
+.cake {
+    width: 180px;
+    max-width: 90%;
+    margin-top: 20px;
+    transition: transform 0.8s;
 }
 
-/* Girl */
-#girl {
-  position: absolute;
-  bottom: 0;
-  left: 10px;
-  width: 200px;
+/* 🎂 Cake Cut Animation */
+.cut {
+    transform: rotate(-12deg) scale(1.05);
 }
 
-/* Balloons */
-.balloon {
-  position: absolute;
-  width: 60px;
-  animation: float 6s linear infinite;
+/* 🎁 Surprise */
+#surprise {
+    display: none;
+    margin-top: 20px;
+    animation: fadeIn 1.5s ease;
 }
 
-/* Balloon animation */
-@keyframes float {
-  0% { transform: translateY(100vh); }
-  100% { transform: translateY(-100vh); }
+#surprise img {
+    width: 80%;
+    max-width: 250px;
+    border-radius: 12px;
 }
 
-/* Message */
-#msg {
-  display: none;
-  font-size: 22px;
-  margin-top: 15px;
+/* ✨ Animation */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* 📱 Mobile Fix */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    button {
+        width: 45%;
+        font-size: 13px;
+    }
+
+    .cake {
+        width: 150px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎉 Happy Birthday Sahitya 🎂</h1>
+<div class="overlay"></div>
 
-<button onclick="cutCake()">🎂 Cut Cake</button>
-<button onclick="openSurprise()">🎁 Surprise</button>
+<div class="container">
+    <h1>🎉 Happy Birthday Sahitya 🎂</h1>
+    <p>💖 You are very special 💖</p>
 
-<br>
+    <div class="buttons">
+        <button onclick="cutCake()">🍰 Cut Cake</button>
+        <button onclick="showSurprise()">🎁 Surprise</button>
+    </div>
 
-<img id="cake" src="cake.png">
+    <!-- 🎂 Cake -->
+    <img id="cake" class="cake" src="https://i.imgur.com/8QfQY6p.png">
 
-<div id="msg">💖 You are very special 💖</div>
-
-<!-- Girl -->
-<img id="girl" src="girl.png">
-
-<!-- Balloons -->
-<img src="balloon.png" class="balloon" style="left:10%;">
-<img src="balloon.png" class="balloon" style="left:30%; animation-delay:1s;">
-<img src="balloon.png" class="balloon" style="left:50%; animation-delay:2s;">
-<img src="balloon.png" class="balloon" style="left:70%; animation-delay:3s;">
-<img src="balloon.png" class="balloon" style="left:90%; animation-delay:4s;">
+    <!-- 🎁 Surprise -->
+    <div id="surprise">
+        <h3>💝 Surprise 💝</h3>
+        <img src="https://i.imgur.com/4AiXzf8.jpeg">
+    </div>
+</div>
 
 <script>
-
-// Cake click
 function cutCake() {
-  document.getElementById("msg").style.display = "block";
+    const cake = document.getElementById("cake");
+    cake.classList.add("cut");
+
+    setTimeout(() => {
+        alert("🎉 Cake Cut Successfully ❤️");
+    }, 700);
 }
 
-// Open new page
-function openSurprise() {
-  window.open("surprise.html", "_blank");
+function showSurprise() {
+    document.getElementById("surprise").style.display = "block";
 }
-
 </script>
 
 </body>
