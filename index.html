@@ -2,40 +2,175 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Birthday 🎉</title>
-<link rel="stylesheet" href="style.css">
+<title>Happy Birthday Sahitya</title>
+
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  font-family:Arial;
+  background: radial-gradient(circle, #ff0080, #7928ca, #2afadf);
+  text-align:center;
+  color:white;
+}
+
+/* Title */
+h1{
+  margin-top:20px;
+  font-size:40px;
+}
+h1 span{
+  color:yellow;
+  text-shadow:0 0 20px gold;
+}
+
+/* Buttons */
+button{
+  padding:12px 25px;
+  margin:10px;
+  font-size:18px;
+  background:linear-gradient(45deg, orange, red);
+  border:none;
+  border-radius:10px;
+  color:white;
+}
+
+/* Cake */
+#cake{
+  width:250px;
+}
+
+/* Girl */
+#girl{
+  display:none;
+  width:220px;
+}
+
+/* Balloons */
+.balloon{
+  position:absolute;
+  width:60px;
+  cursor:pointer;
+}
+
+/* Surprise Screen */
+#surprisePage{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  z-index:10;
+}
+
+/* Photo */
+.photo{
+  width:250px;
+  border-radius:20px;
+  box-shadow:0 0 30px cyan,0 0 60px pink;
+  margin-top:50px;
+}
+
+#message{
+  margin-top:20px;
+  font-size:20px;
+}
+</style>
+
 </head>
 
 <body>
 
-<h1>🎂 Happy Birthday Sahitya 🎉</h1>
-<button onclick="openSurprise()">🎁 Open Surprise</button>
+<h1>🎉 Happy Birthday <span>Sahitya</span> 🎂</h1>
 
-<div id="surpriseBox">
+<button onclick="cutCake()">🎂 Cut Cake</button>
+<button onclick="openSurprise()">🎁 Surprise</button>
 
-<img src="https://i.imgur.com/3ZQ3Z6F.png" class="girl">
+<br><br>
 
-<div id="cakeContainer">
-    <img id="cakeFull" src="https://i.imgur.com/OdL0XPt.png">
-    <div id="sliceLeft"></div>
-    <div id="sliceRight"></div>
+<img id="cake" src="https://i.imgur.com/OdL0XPt.png">
+<br>
+<img id="girl" src="file_0000000027c47243896ceb00a92cee87">
+
+<audio id="music" src="music.mp3" loop></audio>
+<audio id="boom" src="https://www.soundjay.com/explosion/explosion-01.mp3"></audio>
+
+<!-- Surprise Screen -->
+<div id="surprisePage">
+  <img src="yourphoto.jpg" class="photo">
+  <p id="message"></p>
 </div>
 
-<button onclick="cutCake()" class="cutBtn">🔪 Cut Cake</button>
+<script>
 
-<div id="videoSlideshow">
-    <img class="vslide active" src="photo1.jpg">
-    <img class="vslide" src="photo2.jpg">
-    <img class="vslide" src="photo3.jpg">
-</div>
+/* CUT CAKE */
+function cutCake(){
+  document.getElementById("cake").style.display="none";
+  document.getElementById("girl").style.display="block";
 
-<p id="surpriseText"></p>
+  document.getElementById("music").play();
 
-</div>
+  // Shake
+  document.body.animate([
+    {transform:"translateX(0)"},
+    {transform:"translateX(10px)"},
+    {transform:"translateX(-10px)"},
+    {transform:"translateX(0)"}
+  ],{duration:300});
+}
 
-<canvas id="fireCanvas"></canvas>
-<audio id="bgMusic" src="music.mp3" loop></audio>
+/* SURPRISE */
+function openSurprise(){
+  document.getElementById("surprisePage").style.display="block";
 
-<script src="script.js"></script>
+  let text="You are very special 💖 Happy Birthday Sahitya 🎂✨";
+  let i=0;
+
+  function type(){
+    if(i<text.length){
+      document.getElementById("message").innerHTML+=text[i];
+      i++;
+      setTimeout(type,50);
+    }
+  }
+  type();
+}
+
+/* BALLOONS */
+for(let i=0;i<10;i++){
+  let b=document.createElement("img");
+  b.src="https://i.imgur.com/6YV1Z9P.png";
+  b.className="balloon";
+
+  b.style.left=Math.random()*window.innerWidth+"px";
+  b.style.top=Math.random()*window.innerHeight+"px";
+
+  b.onclick=function(){
+    b.remove();
+    document.getElementById("boom").play();
+  }
+
+  document.body.appendChild(b);
+}
+
+/* FIREWORKS */
+setInterval(()=>{
+  let f=document.createElement("div");
+  f.style.position="absolute";
+  f.style.left=Math.random()*window.innerWidth+"px";
+  f.style.top=Math.random()*window.innerHeight+"px";
+  f.style.width="10px";
+  f.style.height="10px";
+  f.style.background="yellow";
+  f.style.borderRadius="50%";
+  document.body.appendChild(f);
+
+  setTimeout(()=>f.remove(),500);
+},300);
+
+</script>
+
 </body>
 </html>
