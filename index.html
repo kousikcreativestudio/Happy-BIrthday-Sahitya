@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Sahitya 🎂</title>
+
+<title>🎉 Happy Birthday Sahitya 🎂</title>
 
 <style>
 body {
@@ -11,13 +12,15 @@ body {
   font-family: Arial;
   text-align: center;
   color: white;
-  background: linear-gradient(45deg, #ff00cc, #3333ff);
+  background: url('background.jpg') no-repeat center center/cover;
   overflow: hidden;
 }
 
 /* Title */
 h1 {
-  margin-top: 20px;
+  margin-top: 30px;
+  font-size: 36px;
+  text-shadow: 2px 2px 10px black;
 }
 
 /* Buttons */
@@ -34,32 +37,36 @@ button {
 
 /* Cake */
 #cake {
-  width: 200px;
-  transition: 0.5s;
-}
-
-/* Hidden message */
-#msg {
-  display: none;
-  font-size: 22px;
+  width: 180px;
   margin-top: 20px;
 }
 
-/* Fireworks */
-.firework {
+/* Girl */
+#girl {
   position: absolute;
-  width: 5px;
-  height: 5px;
-  background: yellow;
-  border-radius: 50%;
-  animation: explode 1s linear forwards;
+  bottom: 0;
+  left: 10px;
+  width: 200px;
 }
 
-@keyframes explode {
-  to {
-    transform: translate(var(--x), var(--y));
-    opacity: 0;
-  }
+/* Balloons */
+.balloon {
+  position: absolute;
+  width: 60px;
+  animation: float 6s linear infinite;
+}
+
+/* Balloon animation */
+@keyframes float {
+  0% { transform: translateY(100vh); }
+  100% { transform: translateY(-100vh); }
+}
+
+/* Message */
+#msg {
+  display: none;
+  font-size: 22px;
+  margin-top: 15px;
 }
 </style>
 </head>
@@ -71,63 +78,33 @@ button {
 <button onclick="cutCake()">🎂 Cut Cake</button>
 <button onclick="openSurprise()">🎁 Surprise</button>
 
-<br><br>
+<br>
 
-<img id="cake" src="https://i.imgur.com/6R7bKQK.png">
+<img id="cake" src="cake.png">
 
 <div id="msg">💖 You are very special 💖</div>
 
-<audio id="music" src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid"></audio>
+<!-- Girl -->
+<img id="girl" src="girl.png">
+
+<!-- Balloons -->
+<img src="balloon.png" class="balloon" style="left:10%;">
+<img src="balloon.png" class="balloon" style="left:30%; animation-delay:1s;">
+<img src="balloon.png" class="balloon" style="left:50%; animation-delay:2s;">
+<img src="balloon.png" class="balloon" style="left:70%; animation-delay:3s;">
+<img src="balloon.png" class="balloon" style="left:90%; animation-delay:4s;">
 
 <script>
 
-// Cake Cutting
+// Cake click
 function cutCake() {
-  document.getElementById("cake").src =
-  "https://i.imgur.com/Z6XbK0K.png"; // cut cake image
-
   document.getElementById("msg").style.display = "block";
-
-  document.getElementById("music").play();
-
-  fireworks();
 }
 
-// Fireworks
-function fireworks() {
-  for (let i = 0; i < 80; i++) {
-    let f = document.createElement("div");
-    f.className = "firework";
-
-    f.style.left = Math.random()*window.innerWidth + "px";
-    f.style.top = Math.random()*window.innerHeight + "px";
-
-    f.style.setProperty('--x', (Math.random()*200-100)+"px");
-    f.style.setProperty('--y', (Math.random()*200-100)+"px");
-
-    document.body.appendChild(f);
-
-    setTimeout(()=>f.remove(),1000);
-  }
-}
-
-// Surprise → NEW PAGE
+// Open new page
 function openSurprise() {
   window.open("surprise.html", "_blank");
 }
-
-// Mobile touch effect
-document.addEventListener("touchstart", function(e) {
-  let dot = document.createElement("div");
-  dot.className = "firework";
-
-  dot.style.left = e.touches[0].clientX + "px";
-  dot.style.top = e.touches[0].clientY + "px";
-
-  document.body.appendChild(dot);
-
-  setTimeout(()=>dot.remove(),1000);
-});
 
 </script>
 
