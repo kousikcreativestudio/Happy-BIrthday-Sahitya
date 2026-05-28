@@ -6,10 +6,10 @@
 <style>
 body{
     margin:0;
-    text-align:center;
     background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
     height:100vh;
     overflow:hidden;
+    text-align:center;
 }
 
 /* GIRL */
@@ -22,25 +22,30 @@ body{
 }
 
 /* walk to cake */
-.walk{
-    left:45%;
+.to-cake{
+    left:42%;
 }
 
 /* KNIFE */
 .knife{
-    width:60px;
+    width:70px;
     position:fixed;
     bottom:120px;
-    left:55%;
+    left:60%;
     display:none;
     transition:1s;
 }
 
-/* knife in hand */
-.hold{
-    left:48%;
+/* knife to hand */
+.hold-knife{
+    left:47%;
     bottom:110px;
-    transform:rotate(-40deg);
+    transform:rotate(-30deg);
+}
+
+/* cutting motion */
+.cut-motion{
+    transform:rotate(-30deg) translateY(40px);
 }
 
 /* CAKE CENTER */
@@ -51,7 +56,7 @@ body{
     transform:translate(-50%,-50%);
 }
 
-/* CAKE SPLIT */
+/* cake halves */
 .half{
     width:180px;
     position:absolute;
@@ -66,22 +71,13 @@ body{
     clip-path: inset(0 0 0 50%);
 }
 
+/* split */
 .cut-left{
-    transform:translateX(-30px);
+    transform:translateX(-35px);
 }
 
 .cut-right{
-    transform:translateX(30px);
-}
-
-/* CAKE PIECE */
-.piece{
-    width:60px;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    display:none;
+    transform:translateX(35px);
 }
 
 /* BUTTONS */
@@ -92,14 +88,16 @@ body{
 }
 
 .img-btn{
-    width:100px;
+    width:110px;
     margin:5px;
+    cursor:pointer;
 }
 
 /* MOBILE */
 @media(max-width:600px){
     .girl{width:80px;}
     .half{width:140px;}
+    .img-btn{width:90px;}
 }
 </style>
 </head>
@@ -118,9 +116,6 @@ body{
     <img id="cakeRight" class="half right" src="https://i.ibb.co/v6QqKVRT/cake.png">
 </div>
 
-<!-- SMALL PIECE -->
-<img id="piece" class="piece" src="https://i.ibb.co/v6QqKVRT/cake.png">
-
 <!-- BUTTONS -->
 <div class="btns">
 
@@ -136,42 +131,41 @@ body{
 
 /* ENTRY */
 function showGirl(){
-    document.getElementById("girl").classList.add("walk");
+    document.getElementById("girl").classList.add("to-cake");
 }
 
-/* CUT CAKE FULL ACTION */
+/* CUT CAKE REAL ANIMATION */
 function cutCake(){
 
     let girl = document.getElementById("girl");
     let knife = document.getElementById("knife");
 
-    // walk to cake
-    girl.classList.add("walk");
+    // step 1: girl goes to cake
+    girl.classList.add("to-cake");
 
-    // show knife
+    // step 2: show knife
     setTimeout(()=>{
         knife.style.display="block";
-    },1500);
+    },1200);
 
-    // hold knife
+    // step 3: knife to hand
     setTimeout(()=>{
-        knife.classList.add("hold");
-    },2000);
+        knife.classList.add("hold-knife");
+    },1800);
 
-    // cut cake
+    // step 4: hand cutting motion
+    setTimeout(()=>{
+        knife.classList.add("cut-motion");
+    },2500);
+
+    // step 5: cake splits
     setTimeout(()=>{
         document.getElementById("cakeLeft").classList.add("cut-left");
         document.getElementById("cakeRight").classList.add("cut-right");
-    },2800);
-
-    // show cake piece
-    setTimeout(()=>{
-        document.getElementById("piece").style.display="block";
-    },3500);
-
+    },3200);
 }
 
-/* SURPRISE */
+/* SURPRISE PAGE */
 function goSurprise(){
     window.location.href="surprise.html";
 }
