@@ -1,257 +1,196 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Birthday Surprise</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-    height:100vh;
-    overflow:hidden;
-    background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
-    font-family:sans-serif;
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial;
+  background: linear-gradient(#ff0080, #ff4da6);
 }
 
-/* MAIN CENTER AREA */
-.scene{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
+/* TOP NAME */
+#name {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  font-family: "Brush Script MT", cursive;
+  animation: colorChange 1s infinite;
+  text-shadow: 0 0 10px white, 0 0 20px yellow;
 }
 
-/* GIRL */
-.girl{
-    width:150px;
-    position:absolute;
-    left:-180px;
-    top:50%;
-    transform:translateY(-50%);
-    transition:left 3s linear;
+@keyframes colorChange {
+  0% {color: #ff0000;}
+  25% {color: #00ff00;}
+  50% {color: #00ccff;}
+  75% {color: #ffff00;}
+  100% {color: #ff00ff;}
 }
-
-.walk{
-    animation:walk 0.4s infinite alternate;
-}
-@keyframes walk{
-    0%{transform:translateY(-50%) rotate(0deg);}
-    100%{transform:translateY(-48%) rotate(2deg);}
-}
-
-.move{ left:120px; }
 
 /* CAKE */
-.cake{
-    width:200px;
-}
-
-/* KNIFE */
-.knife{
-    width:80px;
-    position:absolute;
-    right:-120px;
-    top:50%;
-    transform:translateY(-50%);
-    display:none;
-}
-
-/* FIREWORKS */
-#fireworks{
-    position:fixed;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-}
-.fire{
-    position:absolute;
-    width:180px;
-    animation:boom 1.5s linear;
-}
-@keyframes boom{
-    0%{transform:scale(0.5);opacity:1;}
-    100%{transform:scale(2.5);opacity:0;}
-}
-
-/* BALLOONS */
-#balloons{
-    position:fixed;
-    width:100%;
-    height:100%;
-}
-.balloon{
-    width:70px;
-    position:absolute;
-    bottom:-100px;
-    animation:up 6s linear infinite;
-}
-@keyframes up{
-    0%{transform:translateY(0);}
-    100%{transform:translateY(-120vh);}
-}
-
-/* BLAST */
-.blast{
-    position:fixed;
-    width:120px;
-    transform:translate(-50%,-50%) scale(0.5);
-    z-index:999;
-}
-
-/* NAME */
-#name{
-    position:fixed;
-    top:5%;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:50px;
-    font-family:"Brush Script MT",cursive;
-    display:none;
-    color:#ff4dff;
-    text-shadow:0 0 10px currentColor,
-                0 0 20px currentColor,
-                0 0 30px currentColor;
+#cake {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
 }
 
 /* BUTTONS */
-.buttons{
-    position:fixed;
-    bottom:10px;
-    width:100%;
-    text-align:center;
-}
-.buttons img{
-    width:100px;
-    margin:5px;
-    cursor:pointer;
+.buttons {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
 }
 
+.buttons button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+}
+
+/* BALLOONS */
+.balloon {
+  position: absolute;
+  width: 80px;
+  cursor: pointer;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  0% {transform: translateY(100vh);}
+  100% {transform: translateY(-150px);}
+}
+
+/* BLAST EFFECT */
+.blast {
+  position: absolute;
+  width: 100px;
+  pointer-events: none;
+  animation: blastAnim 0.5s forwards;
+}
+
+@keyframes blastAnim {
+  0% {transform: scale(0.5); opacity:1;}
+  100% {transform: scale(1.5); opacity:0;}
+}
+
+/* FIREWORK CANVAS */
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>
 </head>
 
 <body>
 
-<div id="fireworks"></div>
-<div id="balloons"></div>
+<div id="name">Sahitya</div>
 
-<h1 id="name">Sahitya</h1>
+<img id="cake" src="https://i.ibb.co/7y3Q3hF/cake.png">
 
-<div class="scene">
-
-    <img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
-
-    <img id="cake" class="cake" src="https://i.ibb.co/v6QqKVRT/cake.png">
-
-    <img id="knife" class="knife" src="https://i.ibb.co/WNcGgx7j/knife.png">
-
-</div>
+<canvas id="fireworks"></canvas>
 
 <div class="buttons">
-    <img src="https://i.ibb.co/fz19TN1B/entry.png" onclick="entry()">
-    <img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" onclick="cutCake()">
-    <img src="https://i.ibb.co/TDdCnYTj/Surprise.png" onclick="goSurprise()">
+  <button onclick="entry()">Entry</button>
+  <button onclick="cutCake()">Cut Cake</button>
+  <button onclick="surprise()">Surprise</button>
 </div>
 
 <script>
+/* ---------------- FIREWORK ---------------- */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-/* ENTRY */
-function entry(){
-    let g=document.getElementById("girl");
-    g.classList.add("walk");
-    g.classList.add("move");
+let particles = [];
 
-    setTimeout(()=>g.classList.remove("walk"),3000);
+function createFirework(x, y) {
+  for (let i = 0; i < 60; i++) { // bigger fireworks
+    particles.push({
+      x, y,
+      dx: (Math.random() - 0.5) * 8,
+      dy: (Math.random() - 0.5) * 8,
+      life: 100
+    });
+  }
 }
 
-/* CUT */
-function cutCake(){
+function animateFirework() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach((p, i) => {
+    p.x += p.dx;
+    p.y += p.dy;
+    p.life--;
 
-    entry();
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+    ctx.fillStyle = "white";
+    ctx.fill();
 
-    let knife=document.getElementById("knife");
+    if (p.life <= 0) particles.splice(i,1);
+  });
+  requestAnimationFrame(animateFirework);
+}
+animateFirework();
 
-    setTimeout(()=>knife.style.display="block",1500);
-
-    setTimeout(()=>{
-        document.getElementById("name").style.display="block";
-        startFireworks();
-        startBalloons();
-        startColors();
-    },3000);
+/* ---------------- BUTTON ACTIONS ---------------- */
+function entry() {
+  alert("Entry Started 🎉");
 }
 
-/* FIREWORKS */
-function startFireworks(){
-    let c=document.getElementById("fireworks");
+function cutCake() {
+  createFirework(window.innerWidth/2, 200);
 
-    setInterval(()=>{
-        let f=document.createElement("img");
-        f.src="https://i.ibb.co/8QLGcnS/Pngtree-fireworks-for-new-years-celebration-20180243.png";
-        f.className="fire";
-        f.style.left=Math.random()*90+"%";
-        f.style.top=Math.random()*70+"%";
-        c.appendChild(f);
-        setTimeout(()=>f.remove(),1500);
-    },200);
+  setTimeout(() => {
+    createFirework(window.innerWidth/2, 150);
+  }, 500);
 }
 
-/* BALLOONS */
-function startBalloons(){
-    let c=document.getElementById("balloons");
-
-    setInterval(()=>{
-        let b=document.createElement("img");
-        b.src="https://i.ibb.co/8VzV5Rv/balloon.png";
-        b.className="balloon";
-        b.style.left=Math.random()*90+"%";
-
-        b.onclick=(e)=>{
-            blast(e.clientX,e.clientY);
-            b.remove();
-        };
-
-        c.appendChild(b);
-        setTimeout(()=>b.remove(),6000);
-    },700);
+function surprise() {
+  spawnBalloons();
 }
 
-/* BLAST FIXED */
-function blast(x,y){
-    let b=document.createElement("img");
-    b.src="https://i.ibb.co/MDNbcwdM/blast-effect.png";
-    b.className="blast";
+/* ---------------- BALLOONS ---------------- */
+function spawnBalloons() {
+  for (let i = 0; i < 5; i++) {
+    let b = document.createElement("img");
+    b.src = "https://i.ibb.co/8VzV5Rv/balloon.png";
+    b.className = "balloon";
+    b.style.left = Math.random()*window.innerWidth + "px";
 
-    b.style.left=x+"px";
-    b.style.top=y+"px";
+    b.onclick = function(e) {
+      blast(e.clientX, e.clientY);
+      b.remove();
+    };
 
     document.body.appendChild(b);
-
-    setTimeout(()=>{
-        b.style.transition="0.5s";
-        b.style.transform="translate(-50%,-50%) scale(2)";
-        b.style.opacity="0";
-    },10);
-
-    setTimeout(()=>b.remove(),600);
+  }
 }
 
-/* COLOR TEXT */
-function startColors(){
-    let name=document.getElementById("name");
-    let colors=["#ff4dff","#00ffff","#ffff00","#ff0000","#00ff00"];
-    let i=0;
+/* ---------------- BLAST ---------------- */
+function blast(x, y) {
+  let blast = document.createElement("img");
+  blast.src = "https://i.ibb.co/MDNbcwdM/blast-effect.png";
+  blast.className = "blast";
+  blast.style.left = (x-50) + "px";
+  blast.style.top = (y-50) + "px";
 
-    setInterval(()=>{
-        name.style.color=colors[i];
-        i=(i+1)%colors.length;
-    },1000);
+  document.body.appendChild(blast);
+
+  setTimeout(() => {
+    blast.remove();
+  }, 500);
 }
-
-/* SURPRISE */
-function goSurprise(){
-    window.location.href="surprise.html";
-}
-
 </script>
 
 </body>
