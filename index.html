@@ -3,25 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday</title>
+<title>Happy Birthday Sahitya 🎂</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
   text-align: center;
-  background: linear-gradient(45deg, #ff0080, #7928ca, #2afadf);
   color: white;
+  background: linear-gradient(45deg, #ff00cc, #3333ff);
   overflow: hidden;
 }
 
+/* Title */
 h1 {
   margin-top: 20px;
-  font-size: 2.5rem;
 }
 
+/* Buttons */
 button {
-  padding: 12px 20px;
+  padding: 12px 25px;
   margin: 10px;
   border: none;
   border-radius: 10px;
@@ -34,13 +35,14 @@ button {
 /* Cake */
 #cake {
   width: 200px;
-  margin-top: 40px;
-  transition: transform 1s;
+  transition: 0.5s;
 }
 
-/* Cut animation */
-.cut {
-  transform: rotateX(60deg) scale(0.8);
+/* Hidden message */
+#msg {
+  display: none;
+  font-size: 22px;
+  margin-top: 20px;
 }
 
 /* Fireworks */
@@ -59,31 +61,6 @@ button {
     opacity: 0;
   }
 }
-
-/* Message */
-#message {
-  display: none;
-  font-size: 24px;
-  margin-top: 20px;
-}
-
-/* Touch effect */
-.touch {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background: white;
-  border-radius: 50%;
-  animation: touchAnim 0.5s ease-out;
-}
-
-@keyframes touchAnim {
-  to {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-
 </style>
 </head>
 
@@ -93,90 +70,64 @@ button {
 
 <button onclick="cutCake()">🎂 Cut Cake</button>
 <button onclick="openSurprise()">🎁 Surprise</button>
-<button onclick="downloadSite()">⬇ Download</button>
 
-<br>
+<br><br>
 
-<img id="cake" src="https://i.imgur.com/8Km9tLL.png">
+<img id="cake" src="https://i.imgur.com/6R7bKQK.png">
 
-<div id="message">🎉 Many many happy returns of the day! 🎉</div>
+<div id="msg">💖 You are very special 💖</div>
+
+<audio id="music" src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid"></audio>
 
 <script>
 
-// Cake cut
+// Cake Cutting
 function cutCake() {
-  document.getElementById("cake").classList.add("cut");
-  document.getElementById("message").style.display = "block";
+  document.getElementById("cake").src =
+  "https://i.imgur.com/Z6XbK0K.png"; // cut cake image
 
-  startFireworks();
+  document.getElementById("msg").style.display = "block";
+
+  document.getElementById("music").play();
+
+  fireworks();
 }
 
 // Fireworks
-function startFireworks() {
-  for (let i = 0; i < 50; i++) {
-    let fw = document.createElement("div");
-    fw.className = "firework";
+function fireworks() {
+  for (let i = 0; i < 80; i++) {
+    let f = document.createElement("div");
+    f.className = "firework";
 
-    fw.style.left = "50%";
-    fw.style.top = "50%";
+    f.style.left = Math.random()*window.innerWidth + "px";
+    f.style.top = Math.random()*window.innerHeight + "px";
 
-    fw.style.setProperty("--x", (Math.random()*400 - 200) + "px");
-    fw.style.setProperty("--y", (Math.random()*400 - 200) + "px");
+    f.style.setProperty('--x', (Math.random()*200-100)+"px");
+    f.style.setProperty('--y', (Math.random()*200-100)+"px");
 
-    document.body.appendChild(fw);
+    document.body.appendChild(f);
 
-    setTimeout(() => fw.remove(), 1000);
+    setTimeout(()=>f.remove(),1000);
   }
 }
 
-// Surprise → open new page
+// Surprise → NEW PAGE
 function openSurprise() {
-  let newWindow = window.open("", "_blank");
-
-  newWindow.document.write(`
-    <html>
-    <head>
-    <title>Surprise 🎁</title>
-    <style>
-      body {
-        background: black;
-        color: white;
-        text-align: center;
-        font-size: 30px;
-        padding-top: 100px;
-      }
-    </style>
-    </head>
-    <body>
-      🎉 SURPRISE 🎉<br><br>
-      You are special 💖<br>
-      Stay happy always 😊
-    </body>
-    </html>
-  `);
+  window.open("surprise.html", "_blank");
 }
 
-// Touch effect (mobile + desktop)
-document.addEventListener("click", function(e) {
-  let t = document.createElement("div");
-  t.className = "touch";
-  t.style.left = e.clientX + "px";
-  t.style.top = e.clientY + "px";
-  document.body.appendChild(t);
+// Mobile touch effect
+document.addEventListener("touchstart", function(e) {
+  let dot = document.createElement("div");
+  dot.className = "firework";
 
-  setTimeout(() => t.remove(), 500);
+  dot.style.left = e.touches[0].clientX + "px";
+  dot.style.top = e.touches[0].clientY + "px";
+
+  document.body.appendChild(dot);
+
+  setTimeout(()=>dot.remove(),1000);
 });
-
-// Download site
-function downloadSite() {
-  const content = document.documentElement.outerHTML;
-  const blob = new Blob([content], {type: "text/html"});
-  const a = document.createElement("a");
-
-  a.href = URL.createObjectURL(blob);
-  a.download = "birthday.html";
-  a.click();
-}
 
 </script>
 
