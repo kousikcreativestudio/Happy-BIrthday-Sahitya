@@ -6,39 +6,54 @@
 <style>
 body{
     margin:0;
-    padding:0;
     text-align:center;
-    font-family:sans-serif;
     background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
     height:100vh;
     overflow:hidden;
 }
 
-/* girl */
+/* GIRL */
 .girl{
-    width:120px;
+    width:100px;
     position:fixed;
     bottom:80px;
-    left:-150px;
+    left:-120px;
     transition:2s;
 }
 
-/* walking */
+/* walk to cake */
 .walk{
-    left:50%;
-    transform:translateX(-50%);
+    left:45%;
 }
 
-/* cake */
+/* KNIFE */
+.knife{
+    width:60px;
+    position:fixed;
+    bottom:120px;
+    left:55%;
+    display:none;
+    transition:1s;
+}
+
+/* knife in hand */
+.hold{
+    left:48%;
+    bottom:110px;
+    transform:rotate(-40deg);
+}
+
+/* CAKE CENTER */
 .cake-box{
-    position:absolute;
-    bottom:80px;
+    position:fixed;
+    top:50%;
     left:50%;
-    transform:translateX(-50%);
+    transform:translate(-50%,-50%);
 }
 
+/* CAKE SPLIT */
 .half{
-    width:200px;
+    width:180px;
     position:absolute;
     transition:1s;
 }
@@ -52,24 +67,24 @@ body{
 }
 
 .cut-left{
-    transform:translateX(-40px);
+    transform:translateX(-30px);
 }
 
 .cut-right{
-    transform:translateX(40px);
+    transform:translateX(30px);
 }
 
-/* knife */
-.knife{
-    width:80px;
+/* CAKE PIECE */
+.piece{
+    width:60px;
     position:fixed;
-    bottom:130px;
+    top:50%;
     left:50%;
-    transform:translateX(-50%) rotate(-20deg);
+    transform:translate(-50%,-50%);
     display:none;
 }
 
-/* buttons */
+/* BUTTONS */
 .btns{
     position:fixed;
     bottom:10px;
@@ -77,21 +92,14 @@ body{
 }
 
 .img-btn{
-    width:120px;
+    width:100px;
     margin:5px;
-    cursor:pointer;
-    transition:0.3s;
 }
 
-.img-btn:hover{
-    transform:scale(1.1);
-}
-
-/* mobile */
+/* MOBILE */
 @media(max-width:600px){
-    .girl{width:90px;}
-    .half{width:150px;}
-    .img-btn{width:90px;}
+    .girl{width:80px;}
+    .half{width:140px;}
 }
 </style>
 </head>
@@ -110,14 +118,17 @@ body{
     <img id="cakeRight" class="half right" src="https://i.ibb.co/v6QqKVRT/cake.png">
 </div>
 
+<!-- SMALL PIECE -->
+<img id="piece" class="piece" src="https://i.ibb.co/v6QqKVRT/cake.png">
+
 <!-- BUTTONS -->
 <div class="btns">
 
-<img src="https://i.ibb.co/fz19TN1B/entry.png" class="img-btn" onclick="showGirl()">
+<img src="https://i.ibb.co/fz19TN1B/entry.png" onclick="showGirl()" class="img-btn">
 
-<img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" class="img-btn" onclick="cutCake()">
+<img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" onclick="cutCake()" class="img-btn">
 
-<img src="https://i.ibb.co/TDdCnYTj/Surprise.png" class="img-btn" onclick="goSurprise()">
+<img src="https://i.ibb.co/TDdCnYTj/Surprise.png" onclick="goSurprise()" class="img-btn">
 
 </div>
 
@@ -128,29 +139,39 @@ function showGirl(){
     document.getElementById("girl").classList.add("walk");
 }
 
-/* CUT CAKE */
+/* CUT CAKE FULL ACTION */
 function cutCake(){
 
     let girl = document.getElementById("girl");
     let knife = document.getElementById("knife");
 
+    // walk to cake
     girl.classList.add("walk");
 
+    // show knife
     setTimeout(()=>{
         knife.style.display="block";
     },1500);
 
+    // hold knife
+    setTimeout(()=>{
+        knife.classList.add("hold");
+    },2000);
+
+    // cut cake
     setTimeout(()=>{
         document.getElementById("cakeLeft").classList.add("cut-left");
         document.getElementById("cakeRight").classList.add("cut-right");
-    },2500);
+    },2800);
 
+    // show cake piece
     setTimeout(()=>{
-        alert("🎉 Cake Cut Successfully ❤️");
+        document.getElementById("piece").style.display="block";
     },3500);
+
 }
 
-/* SURPRISE PAGE */
+/* SURPRISE */
 function goSurprise(){
     window.location.href="surprise.html";
 }
