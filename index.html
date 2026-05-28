@@ -10,6 +10,27 @@ body{
     background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
     height:100vh;
 }
+    /* KNIFE CUT ANIMATION */
+.cut-action{
+    animation:cutMotion 0.6s ease forwards;
+}
+
+@keyframes cutMotion{
+    0%{ transform:rotate(0deg) translateY(0); }
+    50%{ transform:rotate(-20deg) translateY(10px); }
+    100%{ transform:rotate(0deg) translateY(0); }
+}
+
+/* CAKE CUT EFFECT */
+.cake-cut{
+    animation:cakeCut 0.5s ease;
+}
+
+@keyframes cakeCut{
+    0%{ transform:scale(1); }
+    50%{ transform:scale(0.95); }
+    100%{ transform:scale(1); }
+}
 
 /* GIRL */
 .girl{
@@ -195,26 +216,22 @@ function showGirl(){
 
 /* CUT */
 function cutCake(){
-
     let knife = document.getElementById("knife");
+    let cakeLeft = document.getElementById("cakeLeft");
+let cakeRight = document.getElementById("cakeRight");
 
-    document.getElementById("girl").classList.add("to-cake");
+    // show knife
+    knife.style.display = "block";
 
-    setTimeout(()=>{ knife.style.display="block"; },1200);
-    setTimeout(()=>{ knife.classList.add("hold"); },1800);
-    setTimeout(()=>{ knife.classList.add("cut"); },2500);
+    // add cut animation
+    knife.classList.add("cut-action");
+    cakeLeft.classList.add("cake-cut");
+cakeRight.classList.add("cake-cut");
 
+    // fireworks trigger (keep your existing)
     setTimeout(()=>{
-        document.getElementById("cakeLeft").classList.add("cut-left");
-        document.getElementById("cakeRight").classList.add("cut-right");
-    },3200);
-
-    setTimeout(()=>{
-        document.getElementById("name").style.display="block";
-        startColorChange();
         startFireworks();
-        startBalloons();
-    },3600);
+    },500);
 }
 
 /* FIREWORKS */
