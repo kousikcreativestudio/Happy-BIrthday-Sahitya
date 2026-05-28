@@ -9,43 +9,20 @@ body{
     background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
     height:100vh;
     overflow:hidden;
-    text-align:center;
 }
 
-/* GIRL */
+/* GIRL BIGGER */
 .girl{
-    width:100px;
+    width:160px; /* increased size */
     position:fixed;
-    bottom:80px;
-    left:-120px;
+    bottom:60px;
+    left:-200px;
     transition:2s;
 }
 
-/* walk to cake */
+/* MOVE TO RIGHT SIDE OF CAKE */
 .to-cake{
-    left:42%;
-}
-
-/* KNIFE */
-.knife{
-    width:70px;
-    position:fixed;
-    bottom:120px;
     left:60%;
-    display:none;
-    transition:1s;
-}
-
-/* knife to hand */
-.hold-knife{
-    left:47%;
-    bottom:110px;
-    transform:rotate(-30deg);
-}
-
-/* cutting motion */
-.cut-motion{
-    transform:rotate(-30deg) translateY(40px);
 }
 
 /* CAKE CENTER */
@@ -56,9 +33,9 @@ body{
     transform:translate(-50%,-50%);
 }
 
-/* cake halves */
+/* CAKE */
 .half{
-    width:180px;
+    width:150px;
     position:absolute;
     transition:1s;
 }
@@ -71,13 +48,45 @@ body{
     clip-path: inset(0 0 0 50%);
 }
 
-/* split */
 .cut-left{
-    transform:translateX(-35px);
+    transform:translateX(-30px);
 }
 
 .cut-right{
-    transform:translateX(35px);
+    transform:translateX(30px);
+}
+
+/* KNIFE */
+.knife{
+    width:80px;
+    position:fixed;
+    bottom:120px;
+    left:70%;
+    display:none;
+    transition:1s;
+}
+
+/* HOLD KNIFE */
+.hold{
+    left:63%;
+    bottom:110px;
+    transform:rotate(-40deg);
+}
+
+/* CUT MOTION */
+.cut{
+    transform:rotate(-40deg) translateY(40px);
+}
+
+/* FIREWORKS */
+.fireworks{
+    position:fixed;
+    top:20%;
+    left:50%;
+    transform:translateX(-50%);
+    width:300px;
+    display:none;
+    opacity:0.9;
 }
 
 /* BUTTONS */
@@ -85,6 +94,7 @@ body{
     position:fixed;
     bottom:10px;
     width:100%;
+    text-align:center;
 }
 
 .img-btn{
@@ -95,14 +105,17 @@ body{
 
 /* MOBILE */
 @media(max-width:600px){
-    .girl{width:80px;}
-    .half{width:140px;}
+    .girl{width:120px;}
+    .half{width:120px;}
     .img-btn{width:90px;}
 }
 </style>
 </head>
 
 <body>
+
+<!-- FIREWORKS -->
+<img id="fire" class="fireworks" src="https://i.ibb.co/8QLGcnS/Pngtree-fireworks-for-new-years-celebration-20180243.png">
 
 <!-- GIRL -->
 <img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
@@ -134,35 +147,41 @@ function showGirl(){
     document.getElementById("girl").classList.add("to-cake");
 }
 
-/* CUT CAKE REAL ANIMATION */
+/* CUT CAKE REAL */
 function cutCake(){
 
     let girl = document.getElementById("girl");
     let knife = document.getElementById("knife");
+    let fire = document.getElementById("fire");
 
-    // step 1: girl goes to cake
+    // move girl to cake side
     girl.classList.add("to-cake");
 
-    // step 2: show knife
+    // show knife
     setTimeout(()=>{
         knife.style.display="block";
     },1200);
 
-    // step 3: knife to hand
+    // hold knife
     setTimeout(()=>{
-        knife.classList.add("hold-knife");
+        knife.classList.add("hold");
     },1800);
 
-    // step 4: hand cutting motion
+    // cutting motion
     setTimeout(()=>{
-        knife.classList.add("cut-motion");
+        knife.classList.add("cut");
     },2500);
 
-    // step 5: cake splits
+    // cake split
     setTimeout(()=>{
         document.getElementById("cakeLeft").classList.add("cut-left");
         document.getElementById("cakeRight").classList.add("cut-right");
     },3200);
+
+    // fireworks
+    setTimeout(()=>{
+        fire.style.display="block";
+    },3300);
 }
 
 /* SURPRISE PAGE */
