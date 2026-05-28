@@ -11,18 +11,19 @@ body{
     overflow:hidden;
 }
 
-/* GIRL BIGGER */
+/* GIRL */
 .girl{
-    width:160px; /* increased size */
+    width:160px;
     position:fixed;
-    bottom:60px;
+    top:50%;
     left:-200px;
+    transform:translateY(-50%);
     transition:2s;
 }
 
-/* MOVE TO RIGHT SIDE OF CAKE */
+/* MOVE TO CAKE SIDE */
 .to-cake{
-    left:60%;
+    left:57%;
 }
 
 /* CAKE CENTER */
@@ -33,7 +34,7 @@ body{
     transform:translate(-50%,-50%);
 }
 
-/* CAKE */
+/* CAKE SPLIT */
 .half{
     width:150px;
     position:absolute;
@@ -60,33 +61,41 @@ body{
 .knife{
     width:80px;
     position:fixed;
-    bottom:120px;
+    top:50%;
     left:70%;
+    transform:translateY(-50%);
     display:none;
     transition:1s;
 }
 
-/* HOLD KNIFE */
 .hold{
-    left:63%;
-    bottom:110px;
-    transform:rotate(-40deg);
+    left:62%;
+    transform:translateY(-50%) rotate(-40deg);
 }
 
-/* CUT MOTION */
 .cut{
-    transform:rotate(-40deg) translateY(40px);
+    transform:translateY(-20%) rotate(-40deg);
 }
 
 /* FIREWORKS */
-.fireworks{
+#fireworks{
     position:fixed;
-    top:20%;
-    left:50%;
-    transform:translateX(-50%);
-    width:300px;
-    display:none;
-    opacity:0.9;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+}
+
+.fire{
+    position:absolute;
+    width:80px;
+    animation:boom 1s linear;
+}
+
+@keyframes boom{
+    0%{transform:scale(0.5);opacity:1;}
+    100%{transform:scale(1.5);opacity:0;}
 }
 
 /* BUTTONS */
@@ -115,7 +124,7 @@ body{
 <body>
 
 <!-- FIREWORKS -->
-<img id="fire" class="fireworks" src="https://i.ibb.co/8QLGcnS/Pngtree-fireworks-for-new-years-celebration-20180243.png">
+<div id="fireworks"></div>
 
 <!-- GIRL -->
 <img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
@@ -131,13 +140,9 @@ body{
 
 <!-- BUTTONS -->
 <div class="btns">
-
-<img src="https://i.ibb.co/fz19TN1B/entry.png" onclick="showGirl()" class="img-btn">
-
-<img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" onclick="cutCake()" class="img-btn">
-
-<img src="https://i.ibb.co/TDdCnYTj/Surprise.png" onclick="goSurprise()" class="img-btn">
-
+    <img src="https://i.ibb.co/fz19TN1B/entry.png" onclick="showGirl()" class="img-btn">
+    <img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" onclick="cutCake()" class="img-btn">
+    <img src="https://i.ibb.co/TDdCnYTj/Surprise.png" onclick="goSurprise()" class="img-btn">
 </div>
 
 <script>
@@ -147,12 +152,11 @@ function showGirl(){
     document.getElementById("girl").classList.add("to-cake");
 }
 
-/* CUT CAKE REAL */
+/* CUT CAKE */
 function cutCake(){
 
     let girl = document.getElementById("girl");
     let knife = document.getElementById("knife");
-    let fire = document.getElementById("fire");
 
     // move girl to cake side
     girl.classList.add("to-cake");
@@ -178,13 +182,36 @@ function cutCake(){
         document.getElementById("cakeRight").classList.add("cut-right");
     },3200);
 
-    // fireworks
+    // start fireworks
     setTimeout(()=>{
-        fire.style.display="block";
+        startFireworks();
     },3300);
 }
 
-/* SURPRISE PAGE */
+/* FIREWORKS */
+function startFireworks(){
+
+    let container = document.getElementById("fireworks");
+
+    setInterval(()=>{
+
+        let fire = document.createElement("img");
+        fire.src="https://i.ibb.co/8QLGcnS/Pngtree-fireworks-for-new-years-celebration-20180243.png";
+        fire.className="fire";
+
+        fire.style.left = Math.random()*90 + "%";
+        fire.style.top = Math.random()*60 + "%";
+
+        container.appendChild(fire);
+
+        setTimeout(()=>{
+            fire.remove();
+        },1000);
+
+    },300);
+}
+
+/* SURPRISE */
 function goSurprise(){
     window.location.href="surprise.html";
 }
