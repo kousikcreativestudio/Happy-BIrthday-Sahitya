@@ -9,15 +9,14 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-    font-family: Arial;
+    font-family:Arial;
     text-align:center;
     color:white;
-    overflow-x:hidden;
     background:url('https://i.ibb.co/JwMLHkGT/background.jpg') no-repeat center center fixed;
     background-size:cover;
+    overflow:hidden;
 }
 
-/* overlay */
 .overlay{
     position:fixed;
     width:100%;
@@ -25,19 +24,12 @@ body{
     background:rgba(0,0,0,0.5);
 }
 
-/* content */
 .container{
     position:relative;
     z-index:2;
     padding:20px;
 }
 
-h1{
-    margin-top:20px;
-    font-size:28px;
-}
-
-/* buttons */
 button{
     padding:12px 18px;
     margin:10px;
@@ -45,65 +37,47 @@ button{
     border-radius:10px;
     background:orange;
     color:white;
-    font-size:14px;
 }
 
-/* 🎂 cake */
+/* cake */
 .cake{
-    width:200px;
+    width:180px;
     margin-top:20px;
-    transition:0.8s;
+    transition:1s;
 }
 
 .cut{
-    transform:rotate(-10deg) scale(1.05);
+    transform:scale(1.1) rotate(-8deg);
 }
 
-/* 👧 girl animation */
+/* girl */
 .girl{
-    width:180px;
+    width:120px;
     position:fixed;
-    bottom:-300px;
-    left:50%;
-    transform:translateX(-50%);
-    transition:1.5s;
-    z-index:3;
+    bottom:-200px;
+    left:10%;
+    transition:2s;
 }
 
 .girl.show{
-    bottom:80px;
+    bottom:50px;
 }
 
-/* 🎈 balloons */
+.girl.walk{
+    left:50%;
+    transform:translateX(-50%);
+}
+
+/* balloons */
 .balloon{
     position:fixed;
-    width:60px;
+    width:50px;
     bottom:-100px;
-    animation:floatUp 8s linear infinite;
+    animation:float 8s linear infinite;
 }
 
-@keyframes floatUp{
-    0%{transform:translateY(0);}
-    100%{transform:translateY(-120vh);}
-}
-
-/* 🎁 surprise */
-#surprise{
-    display:none;
-    margin-top:20px;
-}
-
-#surprise img{
-    width:90%;
-    max-width:300px;
-    border-radius:10px;
-}
-
-/* mobile */
-@media(max-width:600px){
-    h1{font-size:22px;}
-    .cake{width:150px;}
-    .girl{width:140px;}
+@keyframes float{
+    to{transform:translateY(-120vh);}
 }
 </style>
 </head>
@@ -116,44 +90,45 @@ button{
     <h1>🎉 Happy Birthday Sahitya 🎂</h1>
     <p>💖 You are very special 💖</p>
 
-    <button onclick="cutCake()">🍰 Cut Cake</button>
-    <button onclick="showSurprise()">🎁 Surprise</button>
     <button onclick="showGirl()">👧 Entry</button>
+    <button onclick="cutCake()">🍰 Cut Cake</button>
+    <button onclick="goSurprise()">🎁 Surprise</button>
 
-    <!-- 🎂 CAKE -->
+    <br>
+
     <img id="cake" class="cake" src="https://i.ibb.co/v6QqKVRT/cake.png">
-
-    <!-- 🎁 SURPRISE -->
-    <div id="surprise">
-        <h2>💝 Surprise 💝</h2>
-        <img src="https://i.ibb.co/DPdz7CNw/photo.jpg">
-    </div>
 </div>
 
-<!-- 👧 GIRL -->
 <img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
 
-<!-- 🎈 BALLOONS -->
-<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:10%;animation-delay:0s;">
-<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:30%;animation-delay:2s;">
-<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:50%;animation-delay:4s;">
-<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:70%;animation-delay:1s;">
-<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:90%;animation-delay:3s;">
+<!-- balloons -->
+<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:10%">
+<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:40%">
+<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:70%">
 
 <script>
-function cutCake(){
-    document.getElementById("cake").classList.add("cut");
-    setTimeout(()=>{
-        alert("🎉 Cake Cut Successfully ❤️");
-    },700);
-}
-
-function showSurprise(){
-    document.getElementById("surprise").style.display="block";
-}
-
 function showGirl(){
     document.getElementById("girl").classList.add("show");
+}
+
+function cutCake(){
+    let girl = document.getElementById("girl");
+
+    // girl walks to cake
+    girl.classList.add("walk");
+
+    setTimeout(()=>{
+        document.getElementById("cake").classList.add("cut");
+    },2000);
+
+    setTimeout(()=>{
+        alert("🎉 Cake Cut Successfully ❤️");
+        girl.style.display="none";
+    },3000);
+}
+
+function goSurprise(){
+    window.location.href="surprise.html";
 }
 </script>
 
