@@ -1,135 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎉 Happy Birthday Sahitya 🎂</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-    font-family:Arial;
+    margin:0;
+    padding:0;
     text-align:center;
-    color:white;
-    background:url('https://i.ibb.co/JwMLHkGT/background.jpg') no-repeat center center fixed;
-    background-size:cover;
+    font-family:sans-serif;
+    background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
+    height:100vh;
     overflow:hidden;
-}
-
-.overlay{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.5);
-}
-
-.container{
-    position:relative;
-    z-index:2;
-    padding:20px;
-}
-
-button{
-    padding:12px 18px;
-    margin:10px;
-    border:none;
-    border-radius:10px;
-    background:orange;
-    color:white;
-}
-
-/* cake */
-.cake{
-    width:180px;
-    margin-top:20px;
-    transition:1s;
-}
-
-.cut{
-    transform:scale(1.1) rotate(-8deg);
 }
 
 /* girl */
 .girl{
     width:120px;
     position:fixed;
-    bottom:-200px;
-    left:10%;
+    bottom:80px;
+    left:-150px;
     transition:2s;
 }
 
-.girl.show{
-    bottom:50px;
-}
-
-.girl.walk{
+/* walking */
+.walk{
     left:50%;
     transform:translateX(-50%);
 }
 
-/* balloons */
-.balloon{
-    position:fixed;
-    width:50px;
-    bottom:-100px;
-    animation:float 8s linear infinite;
+/* cake */
+.cake-box{
+    position:absolute;
+    bottom:80px;
+    left:50%;
+    transform:translateX(-50%);
 }
 
-@keyframes float{
-    to{transform:translateY(-120vh);}
+.half{
+    width:200px;
+    position:absolute;
+    transition:1s;
+}
+
+.left{
+    clip-path: inset(0 50% 0 0);
+}
+
+.right{
+    clip-path: inset(0 0 0 50%);
+}
+
+.cut-left{
+    transform:translateX(-40px);
+}
+
+.cut-right{
+    transform:translateX(40px);
+}
+
+/* knife */
+.knife{
+    width:80px;
+    position:fixed;
+    bottom:130px;
+    left:50%;
+    transform:translateX(-50%) rotate(-20deg);
+    display:none;
+}
+
+/* buttons */
+.btns{
+    position:fixed;
+    bottom:10px;
+    width:100%;
+}
+
+.img-btn{
+    width:120px;
+    margin:5px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img-btn:hover{
+    transform:scale(1.1);
+}
+
+/* mobile */
+@media(max-width:600px){
+    .girl{width:90px;}
+    .half{width:150px;}
+    .img-btn{width:90px;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
-
-<div class="container">
-    <h1>🎉 Happy Birthday Sahitya 🎂</h1>
-    <p>💖 You are very special 💖</p>
-
-    <button onclick="showGirl()">👧 Entry</button>
-    <button onclick="cutCake()">🍰 Cut Cake</button>
-    <button onclick="goSurprise()">🎁 Surprise</button>
-
-    <br>
-
-    <img id="cake" class="cake" src="https://i.ibb.co/v6QqKVRT/cake.png">
-</div>
-
+<!-- GIRL -->
 <img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
 
-<!-- balloons -->
-<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:10%">
-<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:40%">
-<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:70%">
+<!-- KNIFE -->
+<img id="knife" class="knife" src="https://i.ibb.co/WNcGgx7j/knife.png">
+
+<!-- CAKE -->
+<div class="cake-box">
+    <img id="cakeLeft" class="half left" src="https://i.ibb.co/v6QqKVRT/cake.png">
+    <img id="cakeRight" class="half right" src="https://i.ibb.co/v6QqKVRT/cake.png">
+</div>
+
+<!-- BUTTONS -->
+<div class="btns">
+
+<img src="https://i.ibb.co/fz19TN1B/entry.png" class="img-btn" onclick="showGirl()">
+
+<img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" class="img-btn" onclick="cutCake()">
+
+<img src="https://i.ibb.co/TDdCnYTj/Surprise.png" class="img-btn" onclick="goSurprise()">
+
+</div>
 
 <script>
+
+/* ENTRY */
 function showGirl(){
-    document.getElementById("girl").classList.add("show");
+    document.getElementById("girl").classList.add("walk");
 }
 
+/* CUT CAKE */
 function cutCake(){
-    let girl = document.getElementById("girl");
 
-    // girl walks to cake
+    let girl = document.getElementById("girl");
+    let knife = document.getElementById("knife");
+
     girl.classList.add("walk");
 
     setTimeout(()=>{
-        document.getElementById("cake").classList.add("cut");
-    },2000);
+        knife.style.display="block";
+    },1500);
+
+    setTimeout(()=>{
+        document.getElementById("cakeLeft").classList.add("cut-left");
+        document.getElementById("cakeRight").classList.add("cut-right");
+    },2500);
 
     setTimeout(()=>{
         alert("🎉 Cake Cut Successfully ❤️");
-        girl.style.display="none";
-    },3000);
+    },3500);
 }
 
+/* SURPRISE PAGE */
 function goSurprise(){
     window.location.href="surprise.html";
 }
+
 </script>
 
 </body>
