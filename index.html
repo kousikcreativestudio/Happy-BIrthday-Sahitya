@@ -56,23 +56,14 @@ body{
     z-index:6;   /* 👈 above cake now */
 }
 }
-.cut-action{
-    animation:realKnifeCut 0.5s ease-in-out forwards;
+.hit-effect{
+    animation:knifeHit 0.15s ease;
 }
 
-@keyframes realKnifeCut{
-    0%{
-        transform:translate(-50%, -50%) rotate(-45deg);
-    }
-    40%{
-        transform:translate(-50%, -20%) rotate(-45deg); /* moves down */
-    }
-    60%{
-        transform:translate(-50%, -20%) rotate(-45deg); /* stays */
-    }
-    100%{
-        transform:translate(-50%, -50%) rotate(-45deg); /* back */
-    }
+@keyframes knifeHit{
+    0%{ transform:translate(-50%, -5%) rotate(-45deg); }
+    50%{ transform:translate(-50%, 0%) rotate(-45deg); }
+    100%{ transform:translate(-50%, -5%) rotate(-45deg); }
 }
 
 /* FIREWORKS */
@@ -212,13 +203,18 @@ function cutCake(){
         knife.style.display = "block";
 
         // start real cut animation
-        knife.classList.add("cut-action");
+     knife.classList.add("cut-action");
 
-        // cake reacts AFTER knife hits
-        setTimeout(()=>{
-            cakeLeft.classList.add("cut-left");
-            cakeRight.classList.add("cut-right");
-        },300);
+// 🔥 ADD THIS (impact bounce)
+setTimeout(()=>{
+    knife.classList.add("hit-effect");
+},200);
+
+// cake reacts AFTER knife hits
+setTimeout(()=>{
+    cakeLeft.classList.add("cut-left");
+    cakeRight.classList.add("cut-right");
+},220);
 
     },1200);
 
