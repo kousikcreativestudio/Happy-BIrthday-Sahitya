@@ -197,7 +197,6 @@ function cutCake(){
         document.getElementById("name").style.display="block";
         startColorChange();
         startFireworks();
-        startBalloons();
     },3600);
 }
 
@@ -293,6 +292,10 @@ function startColorChange(){
 function goSurprise(){
     window.location.href="surprise.html";
 }
+    /* START BALLOONS WHEN PAGE LOADS */
+window.onload = function(){
+    startBalloons();
+};
 
 </script>
 
