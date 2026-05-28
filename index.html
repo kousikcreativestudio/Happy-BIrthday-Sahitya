@@ -10,27 +10,6 @@ body{
     background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
     height:100vh;
 }
-    /* KNIFE CUT ANIMATION */
-.cut-action{
-    animation:cutMotion 0.6s ease forwards;
-}
-
-@keyframes cutMotion{
-    0%{ transform:rotate(0deg) translateY(0); }
-    50%{ transform:rotate(-20deg) translateY(10px); }
-    100%{ transform:rotate(0deg) translateY(0); }
-}
-
-/* CAKE CUT EFFECT */
-.cake-cut{
-    animation:cakeCut 0.5s ease;
-}
-
-@keyframes cakeCut{
-    0%{ transform:scale(1); }
-    50%{ transform:scale(0.95); }
-    100%{ transform:scale(1); }
-}
 
 /* GIRL */
 .girl{
@@ -41,15 +20,6 @@ body{
     transform:translateY(-50%);
     transition:2s;
     z-index:5;
-}
-    /* REAL WALK ANIMATION */
-.walking{
-    animation:walkMove 0.4s infinite alternate;
-}
-
-@keyframes walkMove{
-    0%{ transform:translateY(-50%) translateX(0); }
-    100%{ transform:translateY(-47%) translateX(2px); }
 }
 .to-cake{ left:57%; }
 
@@ -204,34 +174,31 @@ body{
 
 /* GIRL */
 function showGirl(){
-    let g = document.getElementById("girl");
-
-    g.classList.add("walking");   // walking effect
-    g.classList.add("to-cake");   // move forward
-
-    setTimeout(()=>{
-        g.classList.remove("walking"); // stop after reach
-    },2000);
+    document.getElementById("girl").classList.add("to-cake");
 }
 
 /* CUT */
 function cutCake(){
+
     let knife = document.getElementById("knife");
-    let cakeLeft = document.getElementById("cakeLeft");
-let cakeRight = document.getElementById("cakeRight");
 
-    // show knife
-    knife.style.display = "block";
+    document.getElementById("girl").classList.add("to-cake");
 
-    // add cut animation
-    knife.classList.add("cut-action");
-    cakeLeft.classList.add("cake-cut");
-cakeRight.classList.add("cake-cut");
+    setTimeout(()=>{ knife.style.display="block"; },1200);
+    setTimeout(()=>{ knife.classList.add("hold"); },1800);
+    setTimeout(()=>{ knife.classList.add("cut"); },2500);
 
-    // fireworks trigger (keep your existing)
     setTimeout(()=>{
+        document.getElementById("cakeLeft").classList.add("cut-left");
+        document.getElementById("cakeRight").classList.add("cut-right");
+    },3200);
+
+    setTimeout(()=>{
+        document.getElementById("name").style.display="block";
+        startColorChange();
         startFireworks();
-    },500);
+        startBalloons();
+    },3600);
 }
 
 /* FIREWORKS */
@@ -326,10 +293,7 @@ function startColorChange(){
 function goSurprise(){
     window.location.href="surprise.html";
 }
-/* START BALLOONS WHEN PAGE LOADS */
-window.onload = function(){
-    startBalloons();
-};
+
 </script>
 
 </body>
