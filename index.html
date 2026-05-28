@@ -20,42 +20,27 @@ body{
     transform:translateY(-50%);
     transition:2s;
 }
-
-/* MOVE TO CAKE SIDE */
 .to-cake{
     left:57%;
 }
 
-/* CAKE CENTER */
+/* CAKE */
 .cake-box{
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
 }
-
-/* CAKE SPLIT */
 .half{
     width:150px;
     position:absolute;
     transition:1s;
 }
+.left{ clip-path: inset(0 50% 0 0); }
+.right{ clip-path: inset(0 0 0 50%); }
 
-.left{
-    clip-path: inset(0 50% 0 0);
-}
-
-.right{
-    clip-path: inset(0 0 0 50%);
-}
-
-.cut-left{
-    transform:translateX(-30px);
-}
-
-.cut-right{
-    transform:translateX(30px);
-}
+.cut-left{ transform:translateX(-30px); }
+.cut-right{ transform:translateX(30px); }
 
 /* KNIFE */
 .knife{
@@ -67,12 +52,10 @@ body{
     display:none;
     transition:1s;
 }
-
 .hold{
     left:62%;
     transform:translateY(-50%) rotate(-40deg);
 }
-
 .cut{
     transform:translateY(-20%) rotate(-40deg);
 }
@@ -86,16 +69,51 @@ body{
     height:100%;
     pointer-events:none;
 }
-
 .fire{
     position:absolute;
-    width:80px;
-    animation:boom 1s linear;
+    width:140px; /* BIGGER */
+    animation:boom 1.2s linear;
 }
-
 @keyframes boom{
     0%{transform:scale(0.5);opacity:1;}
-    100%{transform:scale(1.5);opacity:0;}
+    100%{transform:scale(1.8);opacity:0;}
+}
+
+/* NAME */
+#name{
+    position:fixed;
+    top:40%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:60px;
+    color:gold;
+    font-weight:bold;
+    letter-spacing:6px;
+    display:none;
+
+    text-shadow:
+        0 0 10px #fff,
+        0 0 20px pink,
+        0 0 30px red,
+        0 0 40px orange;
+
+    animation:glow 1s infinite alternate;
+}
+
+@keyframes glow{
+    from{
+        text-shadow:
+        0 0 10px #fff,
+        0 0 20px pink,
+        0 0 30px red;
+    }
+    to{
+        text-shadow:
+        0 0 20px #fff,
+        0 0 30px yellow,
+        0 0 40px orange,
+        0 0 60px red;
+    }
 }
 
 /* BUTTONS */
@@ -105,7 +123,6 @@ body{
     width:100%;
     text-align:center;
 }
-
 .img-btn{
     width:110px;
     margin:5px;
@@ -116,6 +133,7 @@ body{
 @media(max-width:600px){
     .girl{width:120px;}
     .half{width:120px;}
+    #name{font-size:40px;}
     .img-btn{width:90px;}
 }
 </style>
@@ -125,6 +143,9 @@ body{
 
 <!-- FIREWORKS -->
 <div id="fireworks"></div>
+
+<!-- NAME -->
+<h1 id="name">Sahitya</h1>
 
 <!-- GIRL -->
 <img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
@@ -158,37 +179,37 @@ function cutCake(){
     let girl = document.getElementById("girl");
     let knife = document.getElementById("knife");
 
-    // move girl to cake side
     girl.classList.add("to-cake");
 
-    // show knife
     setTimeout(()=>{
         knife.style.display="block";
     },1200);
 
-    // hold knife
     setTimeout(()=>{
         knife.classList.add("hold");
     },1800);
 
-    // cutting motion
     setTimeout(()=>{
         knife.classList.add("cut");
     },2500);
 
-    // cake split
     setTimeout(()=>{
         document.getElementById("cakeLeft").classList.add("cut-left");
         document.getElementById("cakeRight").classList.add("cut-right");
     },3200);
 
-    // start fireworks
+    /* SHOW NAME */
+    setTimeout(()=>{
+        document.getElementById("name").style.display="block";
+    },3600);
+
+    /* FIREWORKS AFTER NAME */
     setTimeout(()=>{
         startFireworks();
-    },3300);
+    },4200);
 }
 
-/* FIREWORKS */
+/* FIREWORKS LOOP */
 function startFireworks(){
 
     let container = document.getElementById("fireworks");
@@ -206,7 +227,7 @@ function startFireworks(){
 
         setTimeout(()=>{
             fire.remove();
-        },1000);
+        },1200);
 
     },300);
 }
