@@ -1,0 +1,64 @@
+body{
+    text-align:center;
+    color:white;
+    background:linear-gradient(45deg, red, orange, pink, purple);
+}
+.girl{ width:120px; }
+
+#cakeContainer{
+    position:relative;
+    width:220px;
+    margin:auto;
+}
+#cakeFull{ width:100%; }
+
+#sliceLeft, #sliceRight{
+    position:absolute;
+    top:0;
+    width:50%;
+    height:100%;
+    background-image:url('https://i.imgur.com/OdL0XPt.png');
+    background-size:220px 220px;
+    opacity:0;
+}
+#sliceLeft{ left:0; }
+#sliceRight{ right:0; }
+
+.cut-left{ animation:cutLeft 1s forwards; }
+.cut-right{ animation:cutRight 1s forwards; }
+
+@keyframes cutLeft{
+    to{ transform:translateX(-40px) rotate(-10deg); opacity:1; }
+}
+@keyframes cutRight{
+    to{ transform:translateX(40px) rotate(10deg); opacity:1; }
+}
+
+.cutBtn{
+    margin:10px;
+    padding:10px 20px;
+    background:gold;
+}
+
+#videoSlideshow{
+    width:250px;
+    height:250px;
+    margin:auto;
+    position:relative;
+}
+.vslide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:2s;
+}
+.vslide.active{ opacity:1; }
+
+#fireCanvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}

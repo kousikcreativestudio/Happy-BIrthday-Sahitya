@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Birthday 🎉</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>🎂 Happy Birthday Sahitya 🎉</h1>
+<button onclick="openSurprise()">🎁 Open Surprise</button>
+
+<div id="surpriseBox">
+
+<img src="https://i.imgur.com/3ZQ3Z6F.png" class="girl">
+
+<div id="cakeContainer">
+    <img id="cakeFull" src="https://i.imgur.com/OdL0XPt.png">
+    <div id="sliceLeft"></div>
+    <div id="sliceRight"></div>
+</div>
+
+<button onclick="cutCake()" class="cutBtn">🔪 Cut Cake</button>
+
+<div id="videoSlideshow">
+    <img class="vslide active" src="photo1.jpg">
+    <img class="vslide" src="photo2.jpg">
+    <img class="vslide" src="photo3.jpg">
+</div>
+
+<p id="surpriseText"></p>
+
+</div>
+
+<canvas id="fireCanvas"></canvas>
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
