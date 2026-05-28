@@ -50,10 +50,17 @@ body{
     transform:translateY(-50%);
     display:none;
     transition:1s;
-    z-index:6;
+    z-index:3;
 }
-.hold{ left:62%; transform:translateY(-50%) rotate(-40deg); }
-.cut{ transform:translateY(-20%) rotate(-40deg); }
+.cut-action{
+    animation:realCut 0.6s ease forwards;
+}
+
+@keyframes realCut{
+    0%{ transform:translateY(-50%) rotate(-40deg); }
+    50%{ transform:translateY(-20%) rotate(-40deg); }
+    100%{ transform:translateY(-50%) rotate(-40deg); }
+}
 
 /* FIREWORKS */
 #fireworks{
@@ -181,23 +188,33 @@ function showGirl(){
 function cutCake(){
 
     let knife = document.getElementById("knife");
+    let cakeLeft = document.getElementById("cakeLeft");
+    let cakeRight = document.getElementById("cakeRight");
 
+    // girl walk (keep your existing)
     document.getElementById("girl").classList.add("to-cake");
 
-    setTimeout(()=>{ knife.style.display="block"; },1200);
-    setTimeout(()=>{ knife.classList.add("hold"); },1800);
-    setTimeout(()=>{ knife.classList.add("cut"); },2500);
-
+    // show knife
     setTimeout(()=>{
-        document.getElementById("cakeLeft").classList.add("cut-left");
-        document.getElementById("cakeRight").classList.add("cut-right");
-    },3200);
+        knife.style.display = "block";
 
+        // start real cut animation
+        knife.classList.add("cut-action");
+
+        // cake reacts AFTER knife hits
+        setTimeout(()=>{
+            cakeLeft.classList.add("cut-left");
+            cakeRight.classList.add("cut-right");
+        },300);
+
+    },1200);
+
+    // name + fireworks
     setTimeout(()=>{
         document.getElementById("name").style.display="block";
         startColorChange();
         startFireworks();
-    },3600);
+    },2500);
 }
 
 /* FIREWORKS */
