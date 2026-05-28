@@ -6,111 +6,104 @@
 <title>🎉 Happy Birthday Sahitya 🎂</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family: Arial;
+    text-align:center;
+    color:white;
+    overflow-x:hidden;
+    background:url('https://i.ibb.co/JwMLHkGT/background.jpg') no-repeat center center fixed;
+    background-size:cover;
 }
 
-/* 🎨 Background Image (YOUR IMAGE FIXED) */
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    color: white;
-    background: url('https://i.ibb.co/JwMLHkGT/background.jpg') no-repeat center center fixed;
-    background-size: cover;
+/* overlay */
+.overlay{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
 }
 
-/* Overlay */
-.overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    top: 0;
+/* content */
+.container{
+    position:relative;
+    z-index:2;
+    padding:20px;
 }
 
-/* Content */
-.container {
-    position: relative;
-    z-index: 2;
-    padding: 20px;
-    min-height: 100vh;
+h1{
+    margin-top:20px;
+    font-size:28px;
 }
 
-/* Title */
-h1 {
-    font-size: 32px;
-    margin-top: 20px;
+/* buttons */
+button{
+    padding:12px 18px;
+    margin:10px;
+    border:none;
+    border-radius:10px;
+    background:orange;
+    color:white;
+    font-size:14px;
 }
 
-/* Buttons */
-.buttons {
-    margin: 20px 0;
+/* 🎂 cake */
+.cake{
+    width:200px;
+    margin-top:20px;
+    transition:0.8s;
 }
 
-button {
-    padding: 12px 20px;
-    font-size: 15px;
-    margin: 5px;
-    border: none;
-    border-radius: 10px;
-    background: orange;
-    color: white;
-    cursor: pointer;
+.cut{
+    transform:rotate(-10deg) scale(1.05);
 }
 
-/* Cake */
-.cake {
-    width: 220px;
-    max-width: 90%;
-    margin-top: 20px;
-    transition: transform 0.8s;
+/* 👧 girl animation */
+.girl{
+    width:180px;
+    position:fixed;
+    bottom:-300px;
+    left:50%;
+    transform:translateX(-50%);
+    transition:1.5s;
+    z-index:3;
 }
 
-/* 🎂 Cake Animation */
-.cut {
-    transform: rotate(-10deg) scale(1.05);
+.girl.show{
+    bottom:80px;
 }
 
-/* 🎁 Surprise Section */
-#surprise {
-    display: none;
-    margin-top: 30px;
-    animation: fadeIn 1.5s ease;
+/* 🎈 balloons */
+.balloon{
+    position:fixed;
+    width:60px;
+    bottom:-100px;
+    animation:floatUp 8s linear infinite;
 }
 
-/* YOUR SURPRISE IMAGE */
-#surprise img {
-    width: 90%;
-    max-width: 300px;
-    border-radius: 12px;
+@keyframes floatUp{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-120vh);}
 }
 
-/* Animation */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
+/* 🎁 surprise */
+#surprise{
+    display:none;
+    margin-top:20px;
 }
 
-/* 📱 Mobile Fix */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 24px;
-    }
+#surprise img{
+    width:90%;
+    max-width:300px;
+    border-radius:10px;
+}
 
-    button {
-        width: 45%;
-        font-size: 13px;
-    }
-
-    .cake {
-        width: 160px;
-    }
-
-    #surprise img {
-        width: 95%;
-    }
+/* mobile */
+@media(max-width:600px){
+    h1{font-size:22px;}
+    .cake{width:150px;}
+    .girl{width:140px;}
 }
 </style>
 </head>
@@ -123,35 +116,44 @@ button {
     <h1>🎉 Happy Birthday Sahitya 🎂</h1>
     <p>💖 You are very special 💖</p>
 
-    <div class="buttons">
-        <button onclick="cutCake()">🍰 Cut Cake</button>
-        <button onclick="showSurprise()">🎁 Surprise</button>
-    </div>
+    <button onclick="cutCake()">🍰 Cut Cake</button>
+    <button onclick="showSurprise()">🎁 Surprise</button>
+    <button onclick="showGirl()">👧 Entry</button>
 
-    <!-- 🎂 Cake -->
-    <img id="cake" class="cake" src="https://i.imgur.com/8QfQY6p.png">
+    <!-- 🎂 CAKE -->
+    <img id="cake" class="cake" src="https://i.ibb.co/v6QqKVRT/cake.png">
 
-    <!-- 🎁 Surprise -->
+    <!-- 🎁 SURPRISE -->
     <div id="surprise">
         <h2>💝 Surprise 💝</h2>
-
-        <!-- ✅ YOUR IMAGE (FIXED) -->
-        <img src="https://i.ibb.co/DPdz7CNw/photo.jpg" alt="Surprise">
+        <img src="https://i.ibb.co/DPdz7CNw/photo.jpg">
     </div>
 </div>
 
-<script>
-function cutCake() {
-    const cake = document.getElementById("cake");
-    cake.classList.add("cut");
+<!-- 👧 GIRL -->
+<img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
 
-    setTimeout(() => {
+<!-- 🎈 BALLOONS -->
+<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:10%;animation-delay:0s;">
+<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:30%;animation-delay:2s;">
+<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:50%;animation-delay:4s;">
+<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:70%;animation-delay:1s;">
+<img class="balloon" src="https://i.ibb.co/4gPJP4L4/balloon.png" style="left:90%;animation-delay:3s;">
+
+<script>
+function cutCake(){
+    document.getElementById("cake").classList.add("cut");
+    setTimeout(()=>{
         alert("🎉 Cake Cut Successfully ❤️");
-    }, 700);
+    },700);
 }
 
-function showSurprise() {
-    document.getElementById("surprise").style.display = "block";
+function showSurprise(){
+    document.getElementById("surprise").style.display="block";
+}
+
+function showGirl(){
+    document.getElementById("girl").classList.add("show");
 }
 </script>
 
