@@ -1,158 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Birthday Surprise</title>
 
 <style>
 body{
-    margin:0;
-    overflow:hidden;
-    background:url("https://i.ibb.co/Swd1Xpq1/background.jpg") no-repeat center/cover;
-    height:100vh;
+  margin:0;
+  background:#ffb6c1;
+  overflow:hidden;
+  text-align:center;
+  font-family:sans-serif;
+}
+
+/* NAME ANIMATION */
+#name{
+  font-size:50px;
+  margin-top:20px;
+  animation:colorChange 2s infinite;
+}
+@keyframes colorChange{
+  0%{color:red;}
+  25%{color:blue;}
+  50%{color:green;}
+  75%{color:purple;}
+  100%{color:orange;}
 }
 
 /* BUTTON */
-#btn{
-    position:absolute;
-    top:20px;
-    left:20px;
-    padding:10px 20px;
-    font-size:18px;
-    background:pink;
-    border:none;
-    border-radius:10px;
+#startBtn{
+  padding:15px 30px;
+  font-size:20px;
+  margin-top:20px;
+  cursor:pointer;
 }
 
-/* NAME */
-#name{
-    position:absolute;
-    top:20px;
-    width:100%;
-    text-align:center;
-    font-size:35px;
-    display:none;
-    animation:color 1s infinite alternate;
+/* IMAGES */
+img{
+  position:absolute;
 }
-@keyframes color{
-    from{color:white;}
-    to{color:yellow;}
+
+/* PERSON WALKING */
+#person1{
+  left:-200px;
+  bottom:50px;
+  width:200px;
+}
+
+/* PERSON STANDING */
+#person2{
+  display:none;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:50px;
+  width:200px;
 }
 
 /* GIRL */
-.girl{
-    width:150px;
-    position:fixed;
-    bottom:0;
-    left:-200px;
-    transition:2s;
+#girl{
+  right:50px;
+  bottom:50px;
+  width:200px;
 }
-.move{ left:40%; }
-
-/* PERSON */
-.person{
-    width:150px;
-    position:fixed;
-    bottom:0;
-    right:-200px;
-    transition:2s;
-}
-.enter{ right:30%; }
 
 /* CAKE */
 #cake{
-    width:150px;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    display:none;
+  display:none;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:100px;
+  width:150px;
 }
 
 /* KNIFE */
 #knife{
-    width:80px;
-    position:fixed;
-    top:50%;
-    left:70%;
-    display:none;
+  display:none;
+  left:55%;
+  bottom:120px;
+  width:80px;
+}
+
+/* CAKE PIECE */
+#piece{
+  display:none;
+  left:60%;
+  bottom:120px;
+  width:80px;
 }
 
 /* BALLOONS */
 .balloon{
-    position:absolute;
-    width:60px;
-    bottom:-100px;
-    animation:up 6s linear infinite;
+  width:50px;
+  bottom:-100px;
+  animation:float 6s linear infinite;
 }
-@keyframes up{
-    from{transform:translateY(0);}
-    to{transform:translateY(-120vh);}
+@keyframes float{
+  from{transform:translateY(0);}
+  to{transform:translateY(-800px);}
 }
 
 /* FIREWORK */
-#fire{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:url("https://i.ibb.co/4pJ4JwZ/fireworks.gif") center/cover no-repeat;
-    display:none;
+.fire{
+  position:absolute;
+  width:20px;
+  height:20px;
+  background:yellow;
+  border-radius:50%;
+  display:none;
+  animation:boom 1s ease-out forwards;
+}
+@keyframes boom{
+  from{transform:scale(1); opacity:1;}
+  to{transform:scale(5); opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<button id="btn" onclick="start()">🎁 Surprise</button>
+<h1 id="name">Sahitya</h1>
 
-<h1 id="name">Happy Birthday Sahitya 🎉</h1>
+<button id="startBtn" onclick="start()">🎉 Surprise 🎉</button>
 
-<img src="https://i.ibb.co/4d8QZ8W/girl.png" class="girl" id="girl">
-<img src="https://i.ibb.co/zsKJ0y3/boy-cake.png" class="person" id="person">
+<!-- IMAGES -->
+<img id="person1" src="https://i.ibb.co/YMzgYgD/boy-with-cake.png">
+<img id="person2" src="https://i.ibb.co/rGZJBjv2/boy-standing.png">
+<img id="girl" src="https://i.ibb.co/YOUR-GIRL-IMAGE.png">
 
-<img src="https://i.ibb.co/tpjW68LS/cake-peace.png" id="cake">
-<img src="https://i.ibb.co/gZcfN3Gq/knife.png" id="knife">
+<img id="cake" src="https://i.ibb.co/YOUR-CAKE.png">
+<img id="knife" src="https://i.ibb.co/YOUR-KNIFE.png">
+<img id="piece" src="https://i.ibb.co/tpjW68LS/cake-peace.png">
 
-<div id="fire"></div>
+<!-- BALLOONS -->
+<img class="balloon" src="https://i.ibb.co/YOUR-BALLOON.png" style="left:10%;">
+<img class="balloon" src="https://i.ibb.co/YOUR-BALLOON.png" style="left:40%;">
+<img class="balloon" src="https://i.ibb.co/YOUR-BALLOON.png" style="left:70%;">
 
-<!-- balloons -->
-<img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon" style="left:10%;">
-<img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon" style="left:40%;animation-delay:2s;">
-<img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon" style="left:70%;animation-delay:4s;">
+<!-- FIREWORKS -->
+<div class="fire" id="f1" style="top:20%; left:30%;"></div>
+<div class="fire" id="f2" style="top:30%; left:60%;"></div>
 
 <script>
+
 function start(){
+  document.getElementById("startBtn").style.display="none";
 
-document.getElementById("btn").style.display="none";
+  let p1 = document.getElementById("person1");
 
-let girl=document.getElementById("girl");
-let person=document.getElementById("person");
+  let x = -200;
 
-girl.classList.add("move");
-person.classList.add("enter");
+  let walk = setInterval(()=>{
+    x+=5;
+    p1.style.left = x + "px";
 
-// show cake after give
-setTimeout(()=>{
-    document.getElementById("cake").style.display="block";
-    person.style.display="none"; // hide cake person
-},3000);
+    if(x > window.innerWidth/2 - 100){
+      clearInterval(walk);
 
-// knife
-setTimeout(()=>{
-    document.getElementById("knife").style.display="block";
-},4000);
+      // SWITCH PERSON
+      p1.style.display="none";
+      document.getElementById("person2").style.display="block";
 
-// cut
-setTimeout(()=>{
-    document.getElementById("knife").style.display="none";
-},5500);
+      // SHOW CAKE
+      setTimeout(()=>{
+        document.getElementById("cake").style.display="block";
+      },500);
 
-// show name + fireworks
-setTimeout(()=>{
-    document.getElementById("name").style.display="block";
-    document.getElementById("fire").style.display="block";
-},6000);
+      // SHOW KNIFE
+      setTimeout(()=>{
+        document.getElementById("knife").style.display="block";
+      },1500);
 
+      // CUT CAKE → SHOW FIREWORK
+      setTimeout(()=>{
+        document.getElementById("knife").style.display="none";
+        document.getElementById("f1").style.display="block";
+        document.getElementById("f2").style.display="block";
+      },2500);
+
+      // SHOW PIECE
+      setTimeout(()=>{
+        document.getElementById("piece").style.display="block";
+      },3000);
+
+      // GIVE PIECE
+      setTimeout(()=>{
+        document.getElementById("piece").style.left="45%";
+      },3500);
+
+      // HIDE PIECE
+      setTimeout(()=>{
+        document.getElementById("piece").style.display="none";
+      },4500);
+
+    }
+  },20);
 }
+
 </script>
 
 </body>
