@@ -174,8 +174,10 @@ body{
 
 <!-- ✅ FIXED KNIFE -->
 <img id="knife" class="knife" src="https://i.ibb.co/gZcfN3Gq/knife.png">
+<img id="cakePiece" src="https://i.ibb.co/tpjW68LS/cake-peace.png" 
+style="display:none; position:fixed; width:50px; left:60%; top:50%; transform:translate(-50%,-50%); z-index:999;">
 
-<div class="cake-box">
+<div class="cake-box" id="cakeBox" style="display:none;">
     <img id="cakeLeft" class="half left" src="https://i.ibb.co/v6QqKVRT/cake.png">
     <img id="cakeRight" class="half right" src="https://i.ibb.co/v6QqKVRT/cake.png">
 </div>
@@ -197,90 +199,39 @@ function showGirl(){
 /* CUT */
 function cutCake(){
 
-    let girl = document.getElementById("girl");
     let person = document.getElementById("person");
     let knife = document.getElementById("knife");
+    let cakeBox = document.getElementById("cakeBox");
+    let cakePiece = document.getElementById("cakePiece");
 
-    // Girl comes
-    girl.classList.add("to-cake");
+    // Person comes with cake
+    person.style.left = "40%";
 
-    // 👨 Person enters with cake
+    // Show cake AFTER person arrives
     setTimeout(()=>{
-        person.classList.add("person-enter");
-    },1000);
+        cakeBox.style.display = "block";
+    },2500);
 
-    // Change person to standing (after placing cake)
+    // Show knife and cut
     setTimeout(()=>{
-        person.src = "https://i.ibb.co/rGZJBjv2/boy-standing.png";
-    },3000);
+        knife.style.display = "block";
+    },3500);
 
-    // Show knife in girl hand position
+    // Hide knife after cutting
     setTimeout(()=>{
-        knife.style.display="block";
-        knife.style.left="60%";
-        knife.style.top="50%";
-    },3200);
+        knife.style.display = "none";
+    },5000);
 
-    // Hold knife
+    // Show cake piece (feeding)
     setTimeout(()=>{
-        knife.classList.add("hold");
-    },3600);
+        cakePiece.style.display = "block";
+    },5500);
 
-    // 🔪 REAL CUT MOTION (down + up)
+    // Hide cake piece after giving
     setTimeout(()=>{
-        knife.style.transition="0.4s";
-        knife.style.top="55%";   // down cut
-    },4200);
+        cakePiece.style.display = "none";
+    },7000);
 
-    setTimeout(()=>{
-        knife.style.top="50%";   // up again
-    },4600);
-
-    // Cake split
-    setTimeout(()=>{
-        document.getElementById("cakeLeft").classList.add("cut-left");
-        document.getElementById("cakeRight").classList.add("cut-right");
-    },4700);
-
-    // Hide knife
-    setTimeout(()=>{
-        knife.style.display="none";
-    },5200);
-
-    // 🎉 Start effects AFTER cut
-    setTimeout(()=>{
-        document.getElementById("name").style.display="block";
-        startFireworks();
-        startBalloons();
-    },5300);
-
-    // 🍰 Cake piece feeding
-    setTimeout(()=>{
-
-        let piece = document.createElement("img");
-        piece.src = "https://i.ibb.co/tpjW68LS/cake-peace.png";
-
-        piece.style.position = "fixed";
-        piece.style.width = "50px";
-        piece.style.left = "60%"; // girl side
-        piece.style.top = "50%";
-        piece.style.transform = "translate(-50%,-50%)";
-        piece.style.zIndex = "999";
-
-        document.body.appendChild(piece);
-
-        // Move to person mouth (RIGHT SIDE)
-        setTimeout(()=>{
-            piece.style.transition = "1s";
-            piece.style.left = "75%";
-            piece.style.top = "48%";
-        },100);
-
-        setTimeout(()=>{
-            piece.remove();
-        },1500);
-
-    },6000);
 }
 
 /* FIREWORKS */
