@@ -11,43 +11,51 @@ body{
     height:100vh;
 }
 
+/* BUTTON */
+#surpriseBtn{
+    position:absolute;
+    top:20px;
+    left:20px;
+    padding:10px 20px;
+    font-size:18px;
+    background:#ff4081;
+    color:white;
+    border:none;
+    border-radius:10px;
+}
+
 /* GIRL */
 .girl{
-    width:170px;
+    width:150px;
     position:fixed;
     top:50%;
     left:-200px;
     transform:translateY(-50%);
     transition:2s;
-    z-index:5;
 }
 .to-cake{ left:55%; }
 
-/* PERSON (SIDE ENTRY FIX) */
+/* PERSON */
 .person{
-    width:170px;
+    width:150px;
     position:fixed;
     top:50%;
     right:-200px;
     transform:translateY(-50%);
     transition:2s;
-    z-index:5;
 }
-.person-enter{
-    right:30%;   /* SIDE POSITION (FIXED) */
-}
+.person-enter{ right:30%; }
 
-/* CAKE (HIDDEN FIRST) */
+/* CAKE */
 .cake-box{
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    z-index:5;
-    display:none;   /* IMPORTANT FIX */
+    display:none;
 }
 .half{
-    width:160px;
+    width:150px;
     position:absolute;
     transition:1s;
 }
@@ -58,175 +66,127 @@ body{
 
 /* KNIFE */
 .knife{
-    width:90px;
+    width:80px;
     position:fixed;
     top:50%;
     left:70%;
-    transform:translateY(-50%);
     display:none;
     transition:1s;
-    z-index:6;
 }
-.hold{ left:60%; transform:translateY(-50%) rotate(-40deg); }
-.cut{ transform:translateY(-20%) rotate(-40deg); }
+.hold{ left:60%; transform:rotate(-40deg); }
+
+/* NAME */
+#nameText{
+    display:none;
+    position:absolute;
+    top:20%;
+    width:100%;
+    text-align:center;
+    font-size:40px;
+    font-weight:bold;
+    animation:colorChange 1s infinite alternate;
+}
+@keyframes colorChange{
+    0%{color:red;}
+    25%{color:blue;}
+    50%{color:green;}
+    75%{color:orange;}
+    100%{color:purple;}
+}
+
+/* BALLOONS */
+.balloon{
+    width:70px;
+    position:absolute;
+    bottom:-100px;
+    animation:floatUp 6s linear infinite;
+}
+.b1{ left:20%; }
+.b2{ left:50%; animation-delay:2s; }
+.b3{ left:80%; animation-delay:4s; }
+
+@keyframes floatUp{
+    0%{ transform:translateY(0); opacity:1;}
+    100%{ transform:translateY(-120vh); opacity:0;}
+}
 
 /* FIREWORKS */
 #fireworks{
+    display:none;
     position:fixed;
     width:100%;
     height:100%;
-    top:0;
-    left:0;
-    pointer-events:none;
-    z-index:1;
-}
-
-/* NAME */
-#name{
-    position:fixed;
-    top:6%;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:60px;
-    font-family:"Brush Script MT",cursive;
-    display:none;
-    z-index:20;
-    color:#ff4dff;
-    text-shadow:0 0 10px currentColor,0 0 20px currentColor,0 0 30px currentColor;
-}
-
-/* BUTTONS */
-.btns{
-    position:fixed;
-    bottom:10px;
-    width:100%;
-    text-align:center;
-    z-index:20;
-}
-.img-btn{
-    width:110px;
-    margin:5px;
-    cursor:pointer;
+    background:url("https://i.ibb.co/4f3YzXG/fireworks.gif") center/cover no-repeat;
 }
 </style>
 </head>
 
 <body>
 
+<button id="surpriseBtn">🎁 Surprise</button>
+
+<h1 id="nameText">Happy Birthday Sahitya 🎉</h1>
+
+<img src="https://i.ibb.co/6JPDVKXp/boy-standing.png" class="person" id="person">
+<img src="https://i.ibb.co/6JPDVKXp/boy-standing.png" class="person" id="standing" style="display:none;">
+<img src="https://i.ibb.co/qx3s2P6/girl.png" class="girl" id="girl">
+
+<div class="cake-box" id="cakeBox">
+    <img src="https://i.ibb.co/5sK7m7K/cake.png" class="half left" id="left">
+    <img src="https://i.ibb.co/5sK7m7K/cake.png" class="half right" id="right">
+</div>
+
+<img src="https://i.ibb.co/QX0K7xB/knife.png" class="knife" id="knife">
+
+<div id="balloons" style="display:none;">
+    <img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon b1">
+    <img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon b2">
+    <img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon b3">
+</div>
+
 <div id="fireworks"></div>
 
-<h1 id="name">Sahitya</h1>
-
-<img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
-
-<!-- PERSON -->
-<img id="person" class="person" src="https://i.ibb.co/YMzgYgD/boy-with-cake.png">
-
-<!-- KNIFE -->
-<img id="knife" class="knife" src="https://i.ibb.co/gZcfN3Gq/knife.png">
-
-<!-- CAKE -->
-<div class="cake-box" id="cakeBox">
-    <img id="cakeLeft" class="half left" src="https://i.ibb.co/v6QqKVRT/cake.png">
-    <img id="cakeRight" class="half right" src="https://i.ibb.co/v6QqKVRT/cake.png">
-</div>
-
-<!-- CAKE PIECE -->
-<img id="cakePiece" src="https://i.ibb.co/tpjW68LS/cake-peace.png"
-style="display:none; position:fixed; width:50px; left:58%; top:50%; transform:translate(-50%,-50%); z-index:999;">
-
-<div class="btns">
-    <img src="https://i.ibb.co/zTSpz0pH/entry.png" onclick="showGirl()" class="img-btn">
-    <img src="https://i.ibb.co/Hjg8rJ8/cut-cake.png" onclick="cutCake()" class="img-btn">
-</div>
-
 <script>
+const btn = document.getElementById("surpriseBtn");
+const girl = document.getElementById("girl");
+const person = document.getElementById("person");
+const standing = document.getElementById("standing");
+const cake = document.getElementById("cakeBox");
+const knife = document.getElementById("knife");
 
-function showGirl(){
-    document.getElementById("girl").classList.add("to-cake");
-}
-
-function cutCake(){
-
-    let girl = document.getElementById("girl");
-    let person = document.getElementById("person");
-    let knife = document.getElementById("knife");
-    let cake = document.getElementById("cakeBox");
-    let piece = document.getElementById("cakePiece");
+btn.onclick = () => {
+    btn.style.display="none";
 
     girl.classList.add("to-cake");
 
-    // 👨 Person enters (SIDE)
     setTimeout(()=>{
         person.classList.add("person-enter");
-    },1000);
+    },2000);
 
-    // 🎂 Show cake AFTER person gives
     setTimeout(()=>{
-        cake.style.display="block";
-    },2500);
+        person.style.display="none";       // hide cake person
+        standing.style.display="block";    // show normal person
+        standing.classList.add("person-enter");
 
-    // 🔄 Change person image (no cake)
-    setTimeout(()=>{
-        person.src="https://i.ibb.co/6JPDVKXp/boy-standing.png";
-    },2600);
+        cake.style.display="block";        // show cake
+    },4000);
 
-    // 🔪 Knife show
     setTimeout(()=>{
         knife.style.display="block";
-    },3000);
-
-    setTimeout(()=>{
         knife.classList.add("hold");
-    },3500);
+    },5000);
 
-    // ✂️ Cut
     setTimeout(()=>{
-        knife.classList.add("cut");
-        document.getElementById("cakeLeft").classList.add("cut-left");
-        document.getElementById("cakeRight").classList.add("cut-right");
-    },4200);
+        document.getElementById("left").classList.add("cut-left");
+        document.getElementById("right").classList.add("cut-right");
+    },6000);
 
-    // ❌ Hide knife
     setTimeout(()=>{
-        knife.style.display="none";
-    },5200);
-
-    // 🍰 Give cake piece
-    setTimeout(()=>{
-        piece.style.display="block";
-    },5500);
-
-    // ❌ Hide piece
-    setTimeout(()=>{
-        piece.style.display="none";
+        document.getElementById("fireworks").style.display="block";
+        document.getElementById("balloons").style.display="block";
+        document.getElementById("nameText").style.display="block";
     },7000);
-
-    // 🎆 SHOW NAME + FIREWORKS
-    setTimeout(()=>{
-        document.getElementById("name").style.display="block";
-        startFireworks();
-    },5200);
-}
-
-/* FIREWORKS */
-function startFireworks(){
-    let container = document.getElementById("fireworks");
-
-    setInterval(()=>{
-        let fire = document.createElement("img");
-        fire.src="https://i.ibb.co/bg10RJSM/Pngtree-fireworks-for-new-years-celebration-20180243.png";
-
-        fire.style.position="absolute";
-        fire.style.width="200px";
-        fire.style.left=Math.random()*90+"%";
-        fire.style.top=Math.random()*70+"%";
-
-        container.appendChild(fire);
-        setTimeout(()=>fire.remove(),1500);
-    },300);
-}
-
+};
 </script>
 
 </body>
