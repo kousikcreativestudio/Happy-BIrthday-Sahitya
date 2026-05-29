@@ -170,7 +170,7 @@ body{
     <img src="https://i.ibb.co/tT9r91qw/Surprise.png" onclick="goSurprise()" class="img-btn">
 </div>
 
-    <audio id="music" preload="auto">
+    <audio id="music" preload="auto" playsinline>
   <source src="https://files.catbox.moe/m78pzg.mp3" type="audio/mpeg">
 </audio>
 
@@ -183,16 +183,17 @@ function showGirl(){
 
 /* CUT */
 function cutCake(){
-let music = document.getElementById("music");
 
-music.muted = false;
-music.volume = 1;
+  let music = document.getElementById("music");
 
-music.play().then(()=>{
-  console.log("Playing ✅");
-}).catch(err=>{
-  console.log("Blocked ❌", err);
-});
+  // 🔥 FORCE USER INTERACTION LINK
+  if (e) {
+    music.play().then(()=>{
+      console.log("Playing ✅");
+    }).catch(err=>{
+      console.log("Blocked ❌", err);
+    });
+  }
     
     let knife = document.getElementById("knife");
 
