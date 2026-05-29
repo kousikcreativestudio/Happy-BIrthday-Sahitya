@@ -170,7 +170,9 @@ body{
     <img src="https://i.ibb.co/tT9r91qw/Surprise.png" onclick="goSurprise()" class="img-btn">
 </div>
 
-    <audio id="music" src="https://files.catbox.moe/m78pzg.mp3"></audio>
+    <audio id="music" preload="auto">
+  <source src="https://files.catbox.moe/m78pzg.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
@@ -181,8 +183,16 @@ function showGirl(){
 
 /* CUT */
 function cutCake(){
+let music = document.getElementById("music");
 
-    document.getElementById("music").play().catch(()=>{});
+music.muted = false;
+music.volume = 1;
+
+music.play().then(()=>{
+  console.log("Playing ✅");
+}).catch(err=>{
+  console.log("Blocked ❌", err);
+});
     
     let knife = document.getElementById("knife");
 
