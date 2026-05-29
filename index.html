@@ -7,7 +7,7 @@
 body{
     margin:0;
     overflow:hidden;
-    background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
+    background:url("https://i.ibb.co/Swd1Xpq1/background.jpg") no-repeat center/cover;
     height:100vh;
 }
 
@@ -22,18 +22,6 @@ body{
     z-index:5;
 }
 .to-cake{ left:57%; }
-
-/* 👨 PERSON */
-.person{
-    width:170px;
-    position:fixed;
-    top:50%;
-    right:-200px;
-    transform:translateY(-50%);
-    transition:2s;
-    z-index:5;
-}
-.person-enter{ right:10%; }
 
 /* CAKE */
 .cake-box{
@@ -67,6 +55,60 @@ body{
 .hold{ left:62%; transform:translateY(-50%) rotate(-40deg); }
 .cut{ transform:translateY(-20%) rotate(-40deg); }
 
+/* FIREWORKS */
+#fireworks{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    pointer-events:none;
+    z-index:1;
+}
+.fire{
+    position:absolute;
+    width:200px;
+    animation:boom 1.5s linear;
+}
+@keyframes boom{
+    0%{transform:scale(0.5);opacity:1;}
+    100%{transform:scale(2.5);opacity:0;}
+}
+
+/* BALLOONS */
+#balloons{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:10;
+}
+.balloon{
+    width:80px;
+    position:absolute;
+    bottom:-120px;
+    animation:floatUp 7s linear infinite;
+    cursor:pointer;
+}
+@keyframes floatUp{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-130vh);}
+}
+
+/* BLAST */
+.blast{
+    position:absolute;
+    width:90px;
+    pointer-events:none;
+    animation:blastAnim 0.6s linear;
+    transform:translate(-50%,-50%);
+}
+@keyframes blastAnim{
+    0%{transform:translate(-50%,-50%) scale(0.5);opacity:1;}
+    100%{transform:translate(-50%,-50%) scale(2);opacity:0;}
+}
+
 /* NAME */
 #name{
     position:fixed;
@@ -74,9 +116,14 @@ body{
     left:50%;
     transform:translateX(-50%);
     font-size:60px;
+    font-family:"Brush Script MT",cursive;
     display:none;
     z-index:20;
+
     color:#ff4dff;
+    text-shadow:0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 30px currentColor;
 }
 
 /* BUTTONS */
@@ -92,86 +139,169 @@ body{
     margin:5px;
     cursor:pointer;
 }
+
+/* MOBILE */
+@media(max-width:600px){
+    .girl{width:120px;}
+    .half{width:120px;}
+    #name{font-size:40px;}
+}
 </style>
 </head>
 
 <body>
 
+<div id="fireworks"></div>
+<div id="balloons"></div>
+
 <h1 id="name">Sahitya</h1>
 
-<!-- GIRL -->
+<!-- (kept your girl & cake same) -->
 <img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
 
-<!-- PERSON -->
-<img id="person" class="person" src="https://i.ibb.co/2kR1w0G/person.png">
-
-<!-- KNIFE -->
+<!-- ✅ FIXED KNIFE -->
 <img id="knife" class="knife" src="https://i.ibb.co/gZcfN3Gq/knife.png">
 
-<!-- CAKE -->
 <div class="cake-box">
     <img id="cakeLeft" class="half left" src="https://i.ibb.co/v6QqKVRT/cake.png">
     <img id="cakeRight" class="half right" src="https://i.ibb.co/v6QqKVRT/cake.png">
 </div>
 
-<!-- BUTTONS -->
+<!-- ✅ FIXED BUTTONS -->
 <div class="btns">
     <img src="https://i.ibb.co/zTSpz0pH/entry.png" onclick="showGirl()" class="img-btn">
     <img src="https://i.ibb.co/Hjg8rJ8/cut-cake.png" onclick="cutCake()" class="img-btn">
+    <img src="https://i.ibb.co/d1pk4fK/Surprise.png" onclick="goSurprise()" class="img-btn">
 </div>
 
 <script>
 
-/* GIRL ENTRY */
+/* GIRL */
 function showGirl(){
     document.getElementById("girl").classList.add("to-cake");
 }
 
-/* MAIN FLOW */
+/* CUT */
 function cutCake(){
 
-    let girl = document.getElementById("girl");
-    let person = document.getElementById("person");
     let knife = document.getElementById("knife");
 
-    // girl comes
-    girl.classList.add("to-cake");
+    document.getElementById("girl").classList.add("to-cake");
 
-    // person comes with cake
+    setTimeout(()=>{ knife.style.display="block"; },1200);
+    setTimeout(()=>{ knife.classList.add("hold"); },1800);
+    setTimeout(()=>{ knife.classList.add("cut"); },2500);
+
     setTimeout(()=>{
-        person.classList.add("person-enter");
-    },1000);
-
-    // after reaching → show knife
-    setTimeout(()=>{
-        knife.style.display="block";
-    },2500);
-
-    // hold knife
-    setTimeout(()=>{
-        knife.classList.add("hold");
-    },3000);
-
-    // cut cake
-    setTimeout(()=>{
-        knife.classList.add("cut");
-
         document.getElementById("cakeLeft").classList.add("cut-left");
         document.getElementById("cakeRight").classList.add("cut-right");
+    },3200);
 
-    },3800);
-
-    // hide knife
     setTimeout(()=>{
-        knife.style.display="none";
-    },4500);
-
-    // feeding scene
-    setTimeout(()=>{
-        alert("🍰 Girl feeds cake to person ❤️");
         document.getElementById("name").style.display="block";
-    },5200);
+        startColorChange();
+        startFireworks();
+        startBalloons();
+    },3600);
 }
+
+/* FIREWORKS */
+function startFireworks(){
+    let container = document.getElementById("fireworks");
+
+    setInterval(()=>{
+        let fire = document.createElement("img");
+
+        /* ✅ FIXED FIREWORK */
+        fire.src="https://i.ibb.co/bg10RJSM/Pngtree-fireworks-for-new-years-celebration-20180243.png";
+
+        fire.className="fire";
+
+        fire.style.left = Math.random()*95 + "%";
+        fire.style.top = Math.random()*70 + "%";
+
+        container.appendChild(fire);
+        setTimeout(()=>{ fire.remove(); },1500);
+    },200);
+}
+
+/* BALLOONS */
+function startBalloons(){
+    let container = document.getElementById("balloons");
+
+    setInterval(()=>{
+        let b = document.createElement("img");
+
+        /* ✅ FIXED BALLOON */
+        b.src="https://i.ibb.co/5gWyxXRD/balloon.png";
+
+        b.className="balloon";
+        b.style.left = Math.random()*90 + "%";
+
+        b.onclick = function(e){
+            createBlast(e.clientX, e.clientY);
+            b.remove();
+        };
+
+        container.appendChild(b);
+
+        setTimeout(()=>{ b.remove(); },7000);
+    },700);
+}
+
+/* BLAST */
+function createBlast(x,y){
+
+    let blast = document.createElement("img");
+
+    /* ✅ FIXED BLAST */
+    blast.src = "https://i.ibb.co/N6664TPK/blast-effect.png";
+
+    blast.style.position = "fixed";
+    blast.style.left = x + "px";
+    blast.style.top = y + "px";
+
+    blast.style.transform = "translate(-50%,-50%) scale(0.5)";
+    blast.style.width = "120px";
+    blast.style.pointerEvents = "none";
+    blast.style.zIndex = "999";
+
+    document.body.appendChild(blast);
+
+    setTimeout(()=>{
+        blast.style.transition = "0.5s";
+        blast.style.transform = "translate(-50%,-50%) scale(1.8)";
+        blast.style.opacity = "0";
+    },10);
+
+    setTimeout(()=>{
+        blast.remove();
+    },600);
+}
+
+/* COLOR TEXT */
+function startColorChange(){
+    let name = document.getElementById("name");
+
+    let colors=["#ff4dff","#00ffff","#ffff00","#ff0000","#00ff00","#ff8800"];
+
+    let i=0;
+
+    setInterval(()=>{
+        name.style.color = colors[i];
+        i=(i+1)%colors.length;
+    },1000);
+}
+
+/* SURPRISE */
+function goSurprise(){
+    window.location.href="surprise.html";
+}
+
+/* START BALLOONS */
+window.onload = function(){
+    startBalloons();
+};
 
 </script>
 
