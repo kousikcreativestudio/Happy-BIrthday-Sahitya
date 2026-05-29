@@ -1,173 +1,287 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
 body{
-    margin:0;
-    overflow:hidden;
-    background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
     height:100vh;
+    background: radial-gradient(circle at center, #1a0026, #000000);
+    overflow:hidden;
+    color:#fff;
+    text-align:center;
 }
 
-/* GIRL */
-.girl{
-    width:170px;
-    position:fixed;
-    top:50%;
-    left:-200px;
-    transform:translateY(-50%);
-    transition:2s;
-    z-index:5;
-}
-.to-cake{ left:57%; }
-
-/* CAKE */
-.cake-box{
-    position:fixed;
+.container{
+    position:absolute;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    z-index:5;
-}
-.half{
-    width:160px;
-    position:absolute;
-    transition:1s;
-}
-.left{ clip-path: inset(0 50% 0 0); }
-.right{ clip-path: inset(0 0 0 50%); }
-.cut-left{ transform:translateX(-40px); }
-.cut-right{ transform:translateX(40px); }
-
-/* KNIFE */
-.knife{
-    width:90px;
-    position:fixed;
-    top:55%;
-    left:58%;
-    transform:translate(-50%, -50%) rotate(-20deg);
-    display:none;
-    z-index:6;
 }
 
-/* REAL CUT */
-.cut-action{
-    animation: knifeCut 0.5s ease forwards;
+h1{
+    font-size:60px;
+    text-shadow:0 0 20px #fff,0 0 40px #ff00ff;
+    animation: glow 2s infinite alternate;
 }
 
-@keyframes knifeCut{
-    0%   { transform:translate(-50%, -50%) rotate(-20deg); }
-    50%  { transform:translate(-50%, -20%) rotate(10deg); }
-    100% { transform:translate(-50%, -50%) rotate(-40deg); }
+@keyframes glow{
+    from{text-shadow:0 0 10px #fff}
+    to{text-shadow:0 0 30px #ff00ff,0 0 60px #ff0080}
 }
 
-/* HIT EFFECT */
-.hit-effect{
-    animation:knifeHit 0.15s ease;
-}
-@keyframes knifeHit{
-    0%{ transform:translate(-50%, -5%) rotate(-40deg); }
-    50%{ transform:translate(-50%, 0%) rotate(-40deg); }
-    100%{ transform:translate(-50%, -5%) rotate(-40deg); }
-}
+.name{font-size:40px;margin-top:10px}
 
-/* NAME */
-#name{
-    position:fixed;
-    top:6%;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:100px;
-    font-family:"Brush Script MT",cursive;
-    display:none;
-    z-index:20;
-    color:#ff4dff;
-    text-shadow:0 0 10px currentColor,
-                0 0 20px currentColor,
-                0 0 30px currentColor;
-}
-
-/* BUTTONS */
-.btns{
-    position:fixed;
-    bottom:10px;
-    width:100%;
-    text-align:center;
-    z-index:20;
-}
-.img-btn{
-    width:110px;
-    margin:5px;
+button{
+    margin-top:15px;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
     cursor:pointer;
+    background:#fff;
+    color:#333
+}
+
+button:hover{background:#ff0080;color:#fff}
+
+/* Balloons */
+.balloon{
+    position:absolute;
+    bottom:-150px;
+    width:60px;
+    height:80px;
+    border-radius:50%;
+    animation: float 6s linear infinite
+}
+
+@keyframes float{
+    0%{transform:translateY(0)}
+    100%{transform:translateY(-120vh)}
+}
+
+/* Confetti */
+.confetti{
+    position:absolute;
+    width:10px;
+    height:10px;
+    animation: fall 5s linear infinite
+}
+
+@keyframes fall{
+    0%{transform:translateY(-10vh)}
+    100%{transform:translateY(110vh)}
+}
+
+/* Cake */
+.cake{
+    width:120px;
+    height:80px;
+    background:#ffcc99;
+    border-radius:10px;
+    position:relative;
+    margin:20px auto;
+    box-shadow:0 0 20px rgba(255,255,255,0.3)
+}
+
+.candle{
+    width:10px;
+    height:30px;
+    background:#fff;
+    position:absolute;
+    top:-30px;
+    left:55px
+}
+
+.flame{
+    width:10px;
+    height:10px;
+    background:orange;
+    border-radius:50%;
+    position:absolute;
+    top:-10px;
+    animation:flicker 0.5s infinite alternate
+}
+
+@keyframes flicker{
+    from{opacity:0.5}
+    to{opacity:1;transform:scale(1.3)}
+}
+
+/* 🔥 FIXED KNIFE */
+.knife{
+    position:absolute;
+    width:120px;
+    height:20px;
+    background:linear-gradient(90deg,#ccc,#eee);
+    top:-60px;
+    left:-150px;
+    border-radius:5px;
+    transform:rotate(-20deg);
+}
+
+/* 🔥 REAL CUT ANIMATION */
+.cut-knife{
+    animation:knifeMove 0.6s forwards;
+}
+
+@keyframes knifeMove{
+    0%   { left:-150px; top:-60px; transform:rotate(-20deg); }
+    50%  { left:30px; top:-10px; transform:rotate(0deg); }
+    100% { left:40px; top:20px; transform:rotate(30deg); }
+}
+
+/* Slice */
+.slice{
+    position:absolute;
+    width:50%;
+    height:100%;
+    background:#ffb380;
+    right:0
+}
+
+.slice-cut{
+    animation:sliceMove 1s forwards
+}
+
+@keyframes sliceMove{
+    100%{transform:translateX(60px) rotate(10deg)}
+}
+
+/* Fireworks */
+.firework{
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%
+}
+
+/* Screen shake */
+.shake{animation:shake 0.5s}
+
+@keyframes shake{
+0%{transform:translate(0,0)}
+25%{transform:translate(5px,-5px)}
+50%{transform:translate(-5px,5px)}
+75%{transform:translate(5px,5px)}
+100%{transform:translate(0,0)}
 }
 </style>
 </head>
 
 <body>
 
-<h1 id="name">Sahitya</h1>
+<div class="container" id="mainBox">
+    <h1>🎉 Happy Birthday 🎉</h1>
+    <div class="name" id="nameText">Your Name</div>
 
-<img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
-<img id="knife" class="knife" src="https://i.ibb.co/WNcGgx7j/knife.png">
+    <div class="cake" id="cake">
+        <div class="knife" id="knife"></div>
+        <div class="slice" id="slice"></div>
+        <div class="candle"><div class="flame" id="flame"></div></div>
+    </div>
 
-<div class="cake-box">
-    <img id="cakeLeft" class="half left" src="https://i.ibb.co/v6QqKVRT/cake.png">
-    <img id="cakeRight" class="half right" src="https://i.ibb.co/v6QqKVRT/cake.png">
-</div>
+    <button onclick="cutCake()">🍰 Cut Cake</button>
+    <button onclick="changeName()">Enter Name</button>
+    <button onclick="surprise()">🎁 Surprise</button>
 
-<div class="btns">
-    <img src="https://i.ibb.co/fz19TN1B/entry.png" onclick="showGirl()" class="img-btn">
-    <img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" onclick="cutCake()" class="img-btn">
+    <div id="typingText" style="margin-top:15px;font-size:18px"></div>
 </div>
 
 <script>
 
-function showGirl(){
-    document.getElementById("girl").classList.add("to-cake");
+function changeName(){
+    let name = prompt("Enter Birthday Name:");
+    if(name) document.getElementById("nameText").innerText = name;
 }
 
+function surprise(){
+    alert("🎂 Have an amazing day! 🎉")
+}
+
+/* Balloons */
+for(let i=0;i<20;i++){
+ let b=document.createElement("div");
+ b.className="balloon";
+ b.style.left=Math.random()*100+"vw";
+ b.style.background=`hsl(${Math.random()*360},100%,50%)`;
+ document.body.appendChild(b);
+}
+
+/* Confetti */
+for(let i=0;i<40;i++){
+ let c=document.createElement("div");
+ c.className="confetti";
+ c.style.left=Math.random()*100+"vw";
+ c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+ document.body.appendChild(c);
+}
+
+/* Fireworks */
+setInterval(()=>{
+ let f=document.createElement("div");
+ f.className="firework";
+ f.style.left=Math.random()*100+"vw";
+ f.style.top=Math.random()*60+"vh";
+ let c1=`hsl(${Math.random()*360},100%,60%)`;
+ let c2=`hsl(${Math.random()*360},100%,60%)`;
+ f.style.boxShadow=`0 0 20px ${c1},0 0 40px ${c2}`;
+ document.body.appendChild(f);
+ setTimeout(()=>{f.style.transform="scale(15)";f.style.opacity="0"},50);
+ setTimeout(()=>f.remove(),1500);
+},500);
+
+/* 🔥 FIXED CUT FUNCTION */
 function cutCake(){
 
-    let knife = document.getElementById("knife");
-    let cakeLeft = document.getElementById("cakeLeft");
-    let cakeRight = document.getElementById("cakeRight");
+ let knife = document.getElementById("knife");
 
-    document.getElementById("girl").classList.add("to-cake");
+ knife.classList.add("cut-knife");
 
-    // SHOW KNIFE
-    setTimeout(()=>{
-        knife.style.display = "block";
-    },1000);
+ document.getElementById("flame").style.display="none";
 
-    // CUT ACTION
-    setTimeout(()=>{
-        knife.classList.add("cut-action");
-    },1500);
+ setTimeout(()=>{
+    document.getElementById("slice").classList.add("slice-cut");
+ },400);
 
-    // HIT EFFECT
-    setTimeout(()=>{
-        knife.classList.add("hit-effect");
-    },1700);
+ let box=document.getElementById("mainBox");
+ box.classList.add("shake");
+ setTimeout(()=>box.classList.remove("shake"),500);
 
-    // CAKE SPLIT
-    setTimeout(()=>{
-        cakeLeft.classList.add("cut-left");
-        cakeRight.classList.add("cut-right");
-    },1800);
+ setTimeout(()=>{
+    knife.style.display="none";
+ },700);
 
-    // HIDE KNIFE
-    setTimeout(()=>{
-        knife.style.display = "none";
-    },2300);
-
-    // SHOW NAME
-    setTimeout(()=>{
-        document.getElementById("name").style.display="block";
-    },2500);
+ alert("🎂 Cake Cut Successfully! 🎉");
 }
 
+/* Typing */
+const msg="🎉 Wishing you happiness, joy and lots of cake! 🎂";
+let i=0;
+function type(){
+ if(i<msg.length){
+  document.getElementById("typingText").innerHTML+=msg[i];
+  i++;
+  setTimeout(type,40);
+ }
+}
+window.onload=type;
+
+</script>
+
+<audio autoplay loop id="bgMusic">
+<source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid">
+</audio>
+
+<script>
+document.body.addEventListener("click",()=>{
+ document.getElementById("bgMusic").play().catch(()=>{});
+});
 </script>
 
 </body>
