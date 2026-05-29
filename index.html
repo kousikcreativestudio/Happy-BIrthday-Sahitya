@@ -1,114 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Surprise</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial;
-  overflow: hidden;
-  text-align: center;
-  background: linear-gradient(135deg, #ff0066, #ff6699);
-  color: white;
+body{
+    margin:0;
+    overflow:hidden;
+    background:url("https://i.ibb.co/Swd1Xpq1/background.jpg") no-repeat center/cover;
+    height:100vh;
 }
 
-/* 🎈 Balloons */
-.balloon {
-  position: absolute;
-  width: 60px;
-  animation: float 8s infinite ease-in;
+/* BUTTON */
+#btn{
+    position:absolute;
+    top:20px;
+    left:20px;
+    padding:10px 20px;
+    font-size:18px;
+    background:pink;
+    border:none;
+    border-radius:10px;
 }
 
-@keyframes float {
-  0% { transform: translateY(100vh); }
-  100% { transform: translateY(-120vh); }
+/* NAME */
+#name{
+    position:absolute;
+    top:20px;
+    width:100%;
+    text-align:center;
+    font-size:35px;
+    display:none;
+    animation:color 1s infinite alternate;
+}
+@keyframes color{
+    from{color:white;}
+    to{color:yellow;}
 }
 
-/* 🎁 Button */
-#surpriseBtn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 12px 20px;
-  background: #ff4da6;
-  border: none;
-  color: white;
-  font-size: 18px;
-  border-radius: 10px;
-  cursor: pointer;
+/* GIRL */
+.girl{
+    width:150px;
+    position:fixed;
+    bottom:0;
+    left:-200px;
+    transition:2s;
+}
+.move{ left:40%; }
+
+/* PERSON */
+.person{
+    width:150px;
+    position:fixed;
+    bottom:0;
+    right:-200px;
+    transition:2s;
+}
+.enter{ right:30%; }
+
+/* CAKE */
+#cake{
+    width:150px;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    display:none;
 }
 
-/* 🎂 Cake */
-#cake {
-  display: none;
-  font-size: 40px;
-  margin-top: 100px;
+/* KNIFE */
+#knife{
+    width:80px;
+    position:fixed;
+    top:50%;
+    left:70%;
+    display:none;
 }
 
-/* 🧍 Person */
-#person {
-  display: block;
-  font-size: 60px;
-  margin-top: 100px;
+/* BALLOONS */
+.balloon{
+    position:absolute;
+    width:60px;
+    bottom:-100px;
+    animation:up 6s linear infinite;
+}
+@keyframes up{
+    from{transform:translateY(0);}
+    to{transform:translateY(-120vh);}
 }
 
-/* 🎉 Name animation */
-#name {
-  font-size: 50px;
-  margin-top: 20px;
-  font-weight: bold;
-  animation: colorChange 2s infinite;
-}
-
-@keyframes colorChange {
-  0% { color: yellow; }
-  25% { color: cyan; }
-  50% { color: lime; }
-  75% { color: orange; }
-  100% { color: pink; }
+/* FIREWORK */
+#fire{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:url("https://i.ibb.co/4pJ4JwZ/fireworks.gif") center/cover no-repeat;
+    display:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎁 Surprise Button -->
-<button id="surpriseBtn">🎁 Surprise</button>
+<button id="btn" onclick="start()">🎁 Surprise</button>
 
-<!-- 🎈 Balloons -->
-<img src="https://i.imgur.com/7QpKQ1F.png" class="balloon" style="left:10%;">
-<img src="https://i.imgur.com/7QpKQ1F.png" class="balloon" style="left:30%;">
-<img src="https://i.imgur.com/7QpKQ1F.png" class="balloon" style="left:50%;">
-<img src="https://i.imgur.com/7QpKQ1F.png" class="balloon" style="left:70%;">
-<img src="https://i.imgur.com/7QpKQ1F.png" class="balloon" style="left:90%;">
+<h1 id="name">Happy Birthday Sahitya 🎉</h1>
 
-<!-- 🧍 Person -->
-<div id="person">🧍</div>
+<img src="https://i.ibb.co/4d8QZ8W/girl.png" class="girl" id="girl">
+<img src="https://i.ibb.co/zsKJ0y3/boy-cake.png" class="person" id="person">
 
-<!-- 🎂 Cake -->
-<div id="cake">🎂</div>
+<img src="https://i.ibb.co/tpjW68LS/cake-peace.png" id="cake">
+<img src="https://i.ibb.co/gZcfN3Gq/knife.png" id="knife">
 
-<!-- 🎉 Name -->
-<div id="name">Sahitya</div>
+<div id="fire"></div>
+
+<!-- balloons -->
+<img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon" style="left:10%;">
+<img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon" style="left:40%;animation-delay:2s;">
+<img src="https://i.ibb.co/3y0Wz6S/balloon1.png" class="balloon" style="left:70%;animation-delay:4s;">
 
 <script>
-document.getElementById("surpriseBtn").onclick = function() {
+function start(){
 
-  // Step 1: Hide person
-  document.getElementById("person").style.display = "none";
+document.getElementById("btn").style.display="none";
 
-  // Step 2: Show cake
-  document.getElementById("cake").style.display = "block";
+let girl=document.getElementById("girl");
+let person=document.getElementById("person");
 
-  // Step 3: After 3 sec → hide cake → show person standing
-  setTimeout(() => {
-    document.getElementById("cake").style.display = "none";
-    document.getElementById("person").style.display = "block";
-  }, 3000);
-};
+girl.classList.add("move");
+person.classList.add("enter");
+
+// show cake after give
+setTimeout(()=>{
+    document.getElementById("cake").style.display="block";
+    person.style.display="none"; // hide cake person
+},3000);
+
+// knife
+setTimeout(()=>{
+    document.getElementById("knife").style.display="block";
+},4000);
+
+// cut
+setTimeout(()=>{
+    document.getElementById("knife").style.display="none";
+},5500);
+
+// show name + fireworks
+setTimeout(()=>{
+    document.getElementById("name").style.display="block";
+    document.getElementById("fire").style.display="block";
+},6000);
+
+}
 </script>
 
 </body>
