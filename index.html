@@ -1,198 +1,302 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
 body{
-    background:#000;
+    margin:0;
     overflow:hidden;
-    text-align:center;
-    color:#fff;
-    font-family:sans-serif;
+    background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
+    height:100vh;
 }
 
-.container{
-    position:absolute;
+/* GIRL */
+.girl{
+    width:170px;
+    position:fixed;
+    top:50%;
+    left:-200px;
+    transform:translateY(-50%);
+    transition:2s;
+    z-index:5;
+}
+.to-cake{ left:57%; }
+
+/* CAKE */
+.cake-box{
+    position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
+    z-index:5;
 }
-
-/* Cake */
-.cake{
-    width:150px;
-    height:100px;
-    background:#ffcc99;
-    margin:20px auto;
-    position:relative;
-    border-radius:10px;
+.half{
+    width:160px;
+    position:absolute;
+    transition:1s;
 }
+.left{ clip-path: inset(0 50% 0 0); }
+.right{ clip-path: inset(0 0 0 50%); }
+.cut-left{ transform:translateX(-40px); }
+.cut-right{ transform:translateX(40px); }
 
-/* Knife Image */
+/* KNIFE */
 .knife{
-    position:absolute;
-    width:120px;
-    height:40px;
-    background:url('https://i.ibb.co/gZcfN3Gq/knife.png') no-repeat center/contain;
-    top:-60px;
-    left:-150px;
-    transform:rotate(-20deg);
+    width:90px;
+    position:fixed;
+    top:50%;
+    left:70%;
+    transform:translateY(-50%);
+    display:none;
+    transition:1s;
+    z-index:6;
 }
+.hold{ left:62%; transform:translateY(-50%) rotate(-40deg); }
+.cut{ transform:translateY(-20%) rotate(-40deg); }
 
-/* Knife animation */
-.cut-knife{
-    animation:knifeMove 0.6s forwards;
-}
-
-@keyframes knifeMove{
-    0%{left:-150px;top:-60px;transform:rotate(-20deg)}
-    50%{left:30px;top:-10px;transform:rotate(0)}
-    100%{left:50px;top:30px;transform:rotate(40deg)}
-}
-
-/* Cake slice */
-.slice{
-    position:absolute;
-    width:50%;
+/* FIREWORKS */
+#fireworks{
+    position:fixed;
+    width:100%;
     height:100%;
-    right:0;
-    background:#ffb380;
+    top:0;
+    left:0;
+    pointer-events:none;
+    z-index:1;
+}
+.fire{
+    position:absolute;
+    width:200px;
+    animation:boom 1.5s linear;
+}
+@keyframes boom{
+    0%{transform:scale(0.5);opacity:1;}
+    100%{transform:scale(2.5);opacity:0;}
 }
 
-.slice-cut{
-    animation:sliceMove 1s forwards;
+/* BALLOONS */
+#balloons{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:10;
 }
-
-@keyframes sliceMove{
-    100%{transform:translateX(70px) rotate(10deg)}
-}
-
-/* Balloon */
 .balloon{
+    width:80px;
     position:absolute;
-    width:60px;
-    height:80px;
-    bottom:-100px;
-    background:url('https://i.ibb.co/5gWyxXRD/balloon.png') no-repeat center/contain;
-    animation:float 6s linear infinite;
+    bottom:-120px;
+    animation:floatUp 7s linear infinite;
+    cursor:pointer;
+}
+@keyframes floatUp{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-130vh);}
 }
 
-@keyframes float{
-    100%{transform:translateY(-120vh)}
-}
-
-/* Firework */
-.firework{
+/* BLAST */
+.blast{
     position:absolute;
-    width:50px;
-    height:50px;
-    background:url('https://i.ibb.co/bg10RJSM/Pngtree-fireworks-for-new-years-celebration-20180243.png') no-repeat center/contain;
+    width:90px;
+    pointer-events:none;
+    animation:blastAnim 0.6s linear;
+    transform:translate(-50%,-50%);
+}
+@keyframes blastAnim{
+    0%{transform:translate(-50%,-50%) scale(0.5);opacity:1;}
+    100%{transform:translate(-50%,-50%) scale(2);opacity:0;}
 }
 
-/* Shake */
-.shake{animation:shake 0.4s}
-@keyframes shake{
-0%{transform:translate(0)}
-25%{transform:translate(5px)}
-50%{transform:translate(-5px)}
-75%{transform:translate(5px)}
-100%{transform:translate(0)}
+/* NAME */
+#name{
+    position:fixed;
+    top:6%;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:60px;
+    font-family:"Brush Script MT",cursive;
+    display:none;
+    z-index:20;
+
+    color:#ff4dff;
+    text-shadow:0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 30px currentColor;
+}
+
+/* BUTTONS */
+.btns{
+    position:fixed;
+    bottom:10px;
+    width:100%;
+    text-align:center;
+    z-index:20;
+}
+.img-btn{
+    width:110px;
+    margin:5px;
+    cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+    .girl{width:120px;}
+    .half{width:120px;}
+    #name{font-size:40px;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="mainBox">
+<div id="fireworks"></div>
+<div id="balloons"></div>
 
-<h1>🎉 Happy Birthday 🎉</h1>
-<h2 id="nameText">Your Name</h2>
+<h1 id="name">Sahitya</h1>
 
-<div class="cake">
-    <div class="knife" id="knife"></div>
-    <div class="slice" id="slice"></div>
+<img id="girl" class="girl" src="https://i.ibb.co/rRx3bbfZ/girl.png">
+<img id="knife" class="knife" src="https://i.ibb.co/WNcGgx7j/knife.png">
+
+<div class="cake-box">
+    <img id="cakeLeft" class="half left" src="https://i.ibb.co/v6QqKVRT/cake.png">
+    <img id="cakeRight" class="half right" src="https://i.ibb.co/v6QqKVRT/cake.png">
 </div>
 
-<!-- IMAGE BUTTONS -->
-<img src="https://i.ibb.co/zTSpz0pH/entry.png" width="120" onclick="changeName()">
-<img src="https://i.ibb.co/Hjg8rJ8/cut-cake.png" width="120" onclick="cutCake()">
-<img src="https://i.ibb.co/d1pk4fK/Surprise.png" width="120" onclick="surprise()">
-
+<div class="btns">
+    <img src="https://i.ibb.co/fz19TN1B/entry.png" onclick="showGirl()" class="img-btn">
+    <img src="https://i.ibb.co/kV0X2gqY/cut-cake.png" onclick="cutCake()" class="img-btn">
+    <img src="https://i.ibb.co/TDdCnYTj/Surprise.png" onclick="goSurprise()" class="img-btn">
 </div>
 
 <script>
 
-/* Name */
-function changeName(){
- let n=prompt("Enter Name:");
- if(n) document.getElementById("nameText").innerText=n;
+/* GIRL */
+function showGirl(){
+    document.getElementById("girl").classList.add("to-cake");
 }
 
-/* Surprise */
-function surprise(){
- alert("🎉 Enjoy your day!");
-}
-
-/* Balloons */
-for(let i=0;i<20;i++){
- let b=document.createElement("div");
- b.className="balloon";
- b.style.left=Math.random()*100+"vw";
- document.body.appendChild(b);
-}
-
-/* Fireworks */
-setInterval(()=>{
- let f=document.createElement("div");
- f.className="firework";
- f.style.left=Math.random()*100+"vw";
- f.style.top=Math.random()*60+"vh";
- document.body.appendChild(f);
- setTimeout(()=>f.remove(),1000);
-},700);
-
-/* CUT CAKE */
+/* CUT */
 function cutCake(){
 
- let knife=document.getElementById("knife");
+    let knife = document.getElementById("knife");
 
- // knife move
- knife.classList.add("cut-knife");
+    document.getElementById("girl").classList.add("to-cake");
 
- // slice after hit
- setTimeout(()=>{
-  document.getElementById("slice").classList.add("slice-cut");
- },400);
+    setTimeout(()=>{ knife.style.display="block"; },1200);
+    setTimeout(()=>{ knife.classList.add("hold"); },1800);
+    setTimeout(()=>{ knife.classList.add("cut"); },2500);
 
- // shake
- let box=document.getElementById("mainBox");
- box.classList.add("shake");
- setTimeout(()=>box.classList.remove("shake"),400);
+    setTimeout(()=>{
+        document.getElementById("cakeLeft").classList.add("cut-left");
+        document.getElementById("cakeRight").classList.add("cut-right");
+    },3200);
 
- // blast effect
- let blast=document.createElement("img");
- blast.src="https://i.ibb.co/N6664TPK/blast-effect.png";
- blast.style.position="absolute";
- blast.style.left="50%";
- blast.style.top="50%";
- blast.style.transform="translate(-50%,-50%)";
- blast.style.width="150px";
- document.body.appendChild(blast);
-
- setTimeout(()=>blast.remove(),700);
-
- // hide knife
- setTimeout(()=>{
-  knife.style.display="none";
- },700);
-
- alert("🎂 Cake Cut!");
+    setTimeout(()=>{
+        document.getElementById("name").style.display="block";
+        startColorChange();
+        startFireworks();
+        startBalloons();
+    },3600);
 }
+
+/* FIREWORKS */
+function startFireworks(){
+    let container = document.getElementById("fireworks");
+
+    setInterval(()=>{
+        let fire = document.createElement("img");
+        fire.src="https://i.ibb.co/8QLGcnS/Pngtree-fireworks-for-new-years-celebration-20180243.png";
+        fire.className="fire";
+
+        fire.style.left = Math.random()*95 + "%";
+        fire.style.top = Math.random()*70 + "%";
+
+        container.appendChild(fire);
+        setTimeout(()=>{ fire.remove(); },1500);
+    },200);
+}
+
+/* BALLOONS (YOUR IMAGE FIXED) */
+function startBalloons(){
+    let container = document.getElementById("balloons");
+
+    setInterval(()=>{
+        let b = document.createElement("img");
+
+        /* YOUR IMAGE */
+        b.src="https://i.ibb.co/8VzV5Rv/balloon.png";
+
+        b.className="balloon";
+        b.style.left = Math.random()*90 + "%";
+
+        b.onclick = function(e){
+            createBlast(e.clientX, e.clientY);
+            b.remove();
+        };
+
+        container.appendChild(b);
+
+        setTimeout(()=>{ b.remove(); },7000);
+    },700);
+}
+
+/* BLAST */
+function createBlast(x,y){
+
+    let blast = document.createElement("img");
+
+    /* YOUR BLAST IMAGE */
+    blast.src = "https://i.ibb.co/MDNbcwdM/blast-effect.png";
+
+    blast.style.position = "fixed";
+    blast.style.left = x + "px";
+    blast.style.top = y + "px";
+
+    /* PERFECT CENTER */
+    blast.style.transform = "translate(-50%,-50%) scale(0.5)";
+
+    blast.style.width = "120px";
+    blast.style.pointerEvents = "none";
+    blast.style.zIndex = "999";
+
+    document.body.appendChild(blast);
+
+    /* ANIMATION */
+    setTimeout(()=>{
+        blast.style.transition = "0.5s";
+        blast.style.transform = "translate(-50%,-50%) scale(1.8)";
+        blast.style.opacity = "0";
+    },10);
+
+    setTimeout(()=>{
+        blast.remove();
+    },600);
+}
+
+/* COLOR TEXT */
+function startColorChange(){
+    let name = document.getElementById("name");
+
+    let colors=["#ff4dff","#00ffff","#ffff00","#ff0000","#00ff00","#ff8800"];
+
+    let i=0;
+
+    setInterval(()=>{
+        name.style.color = colors[i];
+        i=(i+1)%colors.length;
+    },1000);
+}
+
+/* SURPRISE */
+function goSurprise(){
+    window.location.href="surprise.html";
+}
+        /* START BALLOONS WHEN PAGE LOADS */
+window.onload = function(){
+    startBalloons();
+};
 
 </script>
 
