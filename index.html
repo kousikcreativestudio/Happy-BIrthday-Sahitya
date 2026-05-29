@@ -1,148 +1,202 @@
-<script>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-/* BOY (NEW) */
-let boy = document.createElement("img");
-boy.src = "https://i.ibb.co/6JPDVKXp/boy-with-cake.png";
-boy.style.position = "fixed";
-boy.style.bottom = "0";
-boy.style.right = "-200px";
-boy.style.width = "160px";
-boy.style.transition = "2s";
-boy.style.zIndex = "6";
-document.body.appendChild(boy);
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    background:url("https://i.ibb.co/JwMLHkGT/background.jpg") no-repeat center/cover;
+    height:100vh;
+}
 
-/* STANDING BOY */
-let standBoy = document.createElement("img");
-standBoy.src = "https://i.ibb.co/6JPDVKXp/boy-standing.png";
-standBoy.style.position = "fixed";
-standBoy.style.bottom = "0";
-standBoy.style.right = "20%";
-standBoy.style.width = "160px";
-standBoy.style.display = "none";
-standBoy.style.zIndex = "6";
-document.body.appendChild(standBoy);
+/* NAME */
+#name{
+    position:fixed;
+    top:20px;
+    width:100%;
+    text-align:center;
+    font-size:40px;
+    display:none;
+    animation:color 1s infinite alternate;
+    z-index:10;
+}
+@keyframes color{
+    from{color:white;}
+    to{color:yellow;}
+}
 
+/* BUTTON */
+#btn{
+    position:fixed;
+    top:20px;
+    left:20px;
+    padding:10px 20px;
+    font-size:18px;
+    z-index:10;
+}
 
 /* GIRL */
-function showGirl(){
+.girl{
+    width:170px;
+    position:fixed;
+    top:50%;
+    left:-200px;
+    transform:translateY(-50%);
+    transition:2s;
+    z-index:5;
+}
+.to-cake{ left:55%; }
 
-    document.getElementById("girl").classList.add("to-cake");
-
-    /* BOY ENTER SIDE (FIXED POSITION) */
-    setTimeout(()=>{
-        boy.style.right = "35%";  // side of girl
-    },1000);
-
-    /* AFTER GIVE CAKE → SWITCH */
-    setTimeout(()=>{
-        boy.style.display = "none";      // hide cake boy
-        standBoy.style.display = "block"; // show standing boy
-    },3500);
-
+/* BOY */
+#boy{
+    width:160px;
+    position:fixed;
+    bottom:0;
+    right:-200px;
+    transition:2s;
+    z-index:5;
 }
 
-/* CUT */
-function cutCake(){
-
-    let knife = document.getElementById("knife");
-
-    document.getElementById("girl").classList.add("to-cake");
-
-    setTimeout(()=>{ knife.style.display="block"; },1200);
-    setTimeout(()=>{ knife.classList.add("hold"); },1800);
-
-    /* MORE REAL CUT */
-    setTimeout(()=>{
-        knife.classList.add("cut");
-    },2500);
-
-    setTimeout(()=>{
-        document.getElementById("cakeLeft").classList.add("cut-left");
-        document.getElementById("cakeRight").classList.add("cut-right");
-    },3000);
-
-    setTimeout(()=>{
-        knife.style.display="none"; // hide knife after cut
-    },3400);
-
-    /* FINAL CELEBRATION */
-    setTimeout(()=>{
-        document.getElementById("name").style.display="block";
-        startColorChange();
-        startFireworks();
-        startBalloons();
-    },3600);
+/* STAND BOY */
+#standBoy{
+    width:160px;
+    position:fixed;
+    bottom:0;
+    right:20%;
+    display:none;
+    z-index:5;
 }
+
+/* CAKE */
+.cake-box{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    display:none;
+}
+.half{
+    width:160px;
+    position:absolute;
+    transition:1s;
+}
+.left{ clip-path: inset(0 50% 0 0); }
+.right{ clip-path: inset(0 0 0 50%); }
+.cut-left{ transform:translateX(-40px); }
+.cut-right{ transform:translateX(40px); }
+
+/* KNIFE */
+.knife{
+    width:90px;
+    position:fixed;
+    top:50%;
+    left:70%;
+    transform:translateY(-50%);
+    display:none;
+    transition:1s;
+}
+.hold{ left:60%; transform:translateY(-50%) rotate(-40deg); }
+.cut{ transform:translateY(-20%) rotate(-40deg); }
 
 /* FIREWORKS */
-function startFireworks(){
-    let container = document.getElementById("fireworks");
-
-    setInterval(()=>{
-        let fire = document.createElement("img");
-        fire.src="https://i.ibb.co/8QLGcnS/Pngtree-fireworks-for-new-years-celebration-20180243.png";
-        fire.className="fire";
-
-        fire.style.left = Math.random()*95 + "%";
-        fire.style.top = Math.random()*70 + "%";
-
-        container.appendChild(fire);
-        setTimeout(()=>{ fire.remove(); },1500);
-    },200);
+#fireworks{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    display:none;
+    background:url("https://i.ibb.co/3mJ6Y8H/fireworks.gif") center/cover;
 }
 
 /* BALLOONS */
-function startBalloons(){
-    let container = document.getElementById("balloons");
-
-    setInterval(()=>{
-        let b = document.createElement("img");
-
-        b.src="https://i.ibb.co/8VzV5Rv/balloon.png";
-
-        b.className="balloon";
-        b.style.left = Math.random()*90 + "%";
-
-        b.onclick = function(e){
-            createBlast(e.clientX, e.clientY);
-            b.remove();
-        };
-
-        container.appendChild(b);
-
-        setTimeout(()=>{ b.remove(); },7000);
-    },700);
+#balloons{
+    position:fixed;
+    bottom:-200px;
+    left:50%;
+    transform:translateX(-50%);
+    width:200px;
+    display:none;
+    animation:up 5s linear infinite;
 }
-
-/* BLAST (FIXED URL) */
-function createBlast(x,y){
-
-    let blast = document.createElement("img");
-
-    blast.src = "https://i.ibb.co/5Y3K8Jr/blast.png"; // ✅ FIXED
-
-    blast.className="blast";
-    blast.style.left = x + "px";
-    blast.style.top = y + "px";
-
-    document.body.appendChild(blast);
-
-    setTimeout(()=>{ blast.remove(); },600);
+@keyframes up{
+    from{bottom:-200px;}
+    to{bottom:100%;}
 }
+</style>
+</head>
 
-/* NAME COLOR CHANGE */
-function startColorChange(){
-    let name = document.getElementById("name");
+<body>
 
-    setInterval(()=>{
-        let colors = ["#ff4dff","#00ffff","#ffff00","#ff0000","#00ff00"];
-        name.style.color = colors[Math.floor(Math.random()*colors.length)];
-    },500);
-}
+<button id="btn" onclick="start()">🎉 Surprise</button>
 
-/* SURPRISE BUTTON */
-function goSurprise(){
-    showGirl();
+<h1 id="name">Sahitya 🎂</h1>
+
+<img id="girl" class="girl" src="https://i.ibb.co/6JPDVKXp/girl.png">
+
+<img id="boy" src="https://i.ibb.co/6JPDVKXp/boy-with-cake.png">
+<img id="standBoy" src="https://i.ibb.co/6JPDVKXp/boy-standing.png">
+
+<div class="cake-box" id="cake">
+    <img src="https://i.ibb.co/6JPDVKXp/cake.png" class="half left" id="left">
+    <img src="https://i.ibb.co/6JPDVKXp/cake.png" class="half right" id="right">
+</div>
+
+<img id="knife" class="knife" src="https://i.ibb.co/6JPDVKXp/knife.png">
+
+<div id="fireworks"></div>
+
+<img id="balloons" src="https://i.ibb.co/6JPDVKXp/balloons.png">
+
+<script>
+
+function start(){
+
+    document.getElementById("btn").style.display="none";
+    document.getElementById("name").style.display="block";
+
+    // girl move
+    document.getElementById("girl").classList.add("to-cake");
+
+    // boy enter
+    setTimeout(()=>{
+        document.getElementById("boy").style.right="35%";
+    },1000);
+
+    // switch boy
+    setTimeout(()=>{
+        document.getElementById("boy").style.display="none";
+        document.getElementById("standBoy").style.display="block";
+    },3500);
+
+    // show cake
+    setTimeout(()=>{
+        document.getElementById("cake").style.display="block";
+        document.getElementById("knife").style.display="block";
+    },4000);
+
+    // knife hold
+    setTimeout(()=>{
+        document.getElementById("knife").classList.add("hold");
+    },5000);
+
+    // cut cake
+    setTimeout(()=>{
+        document.getElementById("knife").classList.add("cut");
+        document.getElementById("left").classList.add("cut-left");
+        document.getElementById("right").classList.add("cut-right");
+    },6000);
+
+    // fireworks + balloons
+    setTimeout(()=>{
+        document.getElementById("fireworks").style.display="block";
+        document.getElementById("balloons").style.display="block";
+    },7000);
 }
 
 </script>
+
+</body>
+</html>
