@@ -170,6 +170,8 @@ body{
     <img src="https://i.ibb.co/tT9r91qw/Surprise.png" onclick="goSurprise()" class="img-btn">
 </div>
 
+    <audio id="music" src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3"></audio>
+
 <script>
 
 /* GIRL */
@@ -193,12 +195,14 @@ function cutCake(){
         document.getElementById("cakeRight").classList.add("cut-right");
     },3200);
 
-    setTimeout(()=>{
-        document.getElementById("name").style.display="block";
-        startColorChange();
-        startFireworks();
-        startBalloons();
-    },3600);
+  setTimeout(()=>{
+    document.getElementById("name").style.display="block";
+    startColorChange();
+    startFireworks();
+    startBalloons();
+
+    document.getElementById("music").play();
+},3600);
 }
 
 /* FIREWORKS */
